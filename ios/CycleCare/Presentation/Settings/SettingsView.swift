@@ -110,7 +110,7 @@ struct SettingsView: View {
                     }
                     .onChange(of: isBiometricsEnabled) { enabled in
                         if enabled {
-                            biometric.authenticateUser(reason: "Bật bảo mật Face ID cho CycleCare") { success, _ in
+                            biometric.authenticateUser(reason: "Bật bảo mật Face ID cho CycleCare") { success in
                                 if !success {
                                     isBiometricsEnabled = false
                                 }
@@ -119,7 +119,7 @@ struct SettingsView: View {
                     }
 
                     Button {
-                        healthKit.requestAuthorization { success, _ in
+                        healthKit.requestAuthorization { success in
                             // UI feedback
                         }
                     } label: {

@@ -97,7 +97,7 @@ struct ContentView: View {
     }
 
     private func authenticateWithBiometrics() {
-        biometric.authenticateUser(reason: "Mở khóa ứng dụng CycleCare") { success, _ in
+        biometric.authenticateUser(reason: "Mở khóa ứng dụng CycleCare") { success in
             if success {
                 isUnlocked = true
                 authenticationFailed = false
