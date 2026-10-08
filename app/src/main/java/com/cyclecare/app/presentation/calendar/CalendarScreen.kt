@@ -22,17 +22,26 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.WaterDrop
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +51,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.cyclecare.app.R
 import com.cyclecare.app.core.theme.FertileLight
 import com.cyclecare.app.core.theme.FertilePurple
@@ -50,20 +58,25 @@ import com.cyclecare.app.core.theme.OvulationTeal
 import com.cyclecare.app.core.theme.PeriodLightPink
 import com.cyclecare.app.core.theme.PeriodRed
 import com.cyclecare.app.data.repository.CycleCareRepository
+import com.cyclecare.app.domain.model.Cycle
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarScreen(
     repository: CycleCareRepository,
     modifier: Modifier = Modifier,
     onOpenLogForDate: (LocalDate) -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val profile by repository.getProfileFlow().collectAsState(initial = null)
     var currentYearMonth by remember { mutableStateOf(YearMonth.now()) }
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+    var showEditSheet by remember { mutableStateOf(false) }
 
     val daysInMonth = remember(currentYearMonth) {
         val firstDay = currentYearMonth.atDay(1)
@@ -137,7 +150,6 @@ fun CalendarScreen(
                     val isToday = date == LocalDate.now()
                     val isSelected = date == selectedDate
 
-                    // Mock logic chu kỳ hiển thị màu
                     val lastPeriod = profile?.lastPeriodStartDate ?: LocalDate.now().minusDays(10)
                     val daysDiff = java.time.temporal.ChronoUnit.DAYS.between(lastPeriod, date).toInt()
                     val cycleLength = profile?.avgCycleLength ?: 28
@@ -176,7 +188,7 @@ fun CalendarScreen(
                             )
                             .clickable {
                                 selectedDate = date
-                                onOpenLogForDate(date)
+                                showEditSheet = true
                             },
                         contentAlignment = Alignment.Center
                     ) {
@@ -201,7 +213,7 @@ fun CalendarScreen(
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
                 Text(
-                    text = "Chú thích màu sắc",
+                    text = "Chú thích màu sắc (Chạm vào ngày để điều chỉnh kỳ kinh)",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -214,6 +226,76 @@ fun CalendarScreen(
                     LegendItem(color = FertileLight, text = stringResource(R.string.calendar_legend_fertile))
                     LegendItem(color = OvulationTeal.copy(alpha = 0.4f), text = stringResource(R.string.calendar_legend_ovulation))
                 }
+            }
+        }
+    }
+
+    // Period Editing BottomSheet
+    if (showEditSheet && selectedDate != null) {
+        val targetDate = selectedDate!!
+        ModalBottomSheet(
+            onDismissRequest = { showEditSheet = false },
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+            ) {
+                Text(
+                    text = "Ngày ${targetDate.dayOfMonth} tháng ${targetDate.monthValue}, ${targetDate.year}",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            profile?.let { p ->
+                                val updated = p.copy(lastPeriodStartDate = targetDate)
+                                repository.saveProfile(updated)
+                                repository.saveCycle(
+                                    Cycle(
+                                        id = "",
+                                        userId = p.id,
+                                        startDate = targetDate,
+                                        periodLength = p.avgPeriodLength
+                                    )
+                                )
+                            }
+                            showEditSheet = false
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(25.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = PeriodRed)
+                ) {
+                    Icon(Icons.Default.WaterDrop, contentDescription = null)
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text("Bắt đầu kỳ kinh tại ngày này")
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedButton(
+                    onClick = {
+                        showEditSheet = false
+                        onOpenLogForDate(targetDate)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    shape = RoundedCornerShape(25.dp)
+                ) {
+                    Icon(Icons.Default.Edit, contentDescription = null)
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text("Ghi nhật ký cho ngày này")
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }

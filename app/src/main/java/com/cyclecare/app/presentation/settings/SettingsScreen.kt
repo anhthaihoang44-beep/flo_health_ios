@@ -1,5 +1,8 @@
 package com.cyclecare.app.presentation.settings
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +24,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -30,6 +34,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -47,9 +52,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.cyclecare.app.R
 import com.cyclecare.app.core.security.SessionManager
+import com.cyclecare.app.data.remote.AuthResult
 import com.cyclecare.app.data.repository.CycleCareRepository
 import kotlinx.coroutines.launch
 
@@ -65,6 +72,17 @@ fun SettingsScreen(
     val isBiometricEnabled by sessionManager.isBiometricEnabledFlow.collectAsState(initial = false)
 
     var showDeleteConfirmDialog by remember { mutableStateOf(false) }
+    var showLinkIdentityDialog by remember { mutableStateOf(false) }
+    var showExportDialog by remember { mutableStateOf(false) }
+    var exportedJsonText by remember { mutableStateOf("") }
+
+    var linkEmail by remember { mutableStateOf("") }
+    var linkPassword by remember { mutableStateOf("") }
+    var linkErrorMessage by remember { mutableStateOf("") }
+
+    var periodReminderEnabled by remember { mutableStateOf(true) }
+    var ovulationReminderEnabled by remember { mutableStateOf(true) }
+    var dailyLogReminderEnabled by remember { mutableStateOf(true) }
 
     Column(
         modifier = modifier
@@ -112,7 +130,8 @@ fun SettingsScreen(
                     Spacer(modifier = Modifier.height(14.dp))
                     Button(
                         onClick = {
-                            Toast.makeText(context, "Mở luồng liên kết tài khoản (Link Identity)...", Toast.LENGTH_SHORT).show()
+                            linkErrorMessage = ""
+                            showLinkIdentityDialog = true
                         },
                         shape = RoundedCornerShape(20.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
@@ -120,6 +139,50 @@ fun SettingsScreen(
                         Text(stringResource(R.string.settings_link_account))
                     }
                 }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        // Notifications Settings Card
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(18.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        ) {
+            Column(modifier = Modifier.padding(18.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.NotificationsActive,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Text(
+                        text = "Cài đặt nhắc nhở",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                ReminderSwitchItem(
+                    title = "Nhắc trước kỳ kinh (1 ngày)",
+                    checked = periodReminderEnabled,
+                    onCheckedChange = { periodReminderEnabled = it }
+                )
+                ReminderSwitchItem(
+                    title = "Nhắc ngày rụng trứng",
+                    checked = ovulationReminderEnabled,
+                    onCheckedChange = { ovulationReminderEnabled = it }
+                )
+                ReminderSwitchItem(
+                    title = "Nhắc ghi nhật ký mỗi tối (20:00)",
+                    checked = dailyLogReminderEnabled,
+                    onCheckedChange = { dailyLogReminderEnabled = it }
+                )
             }
         }
 
@@ -156,7 +219,7 @@ fun SettingsScreen(
                     onCheckedChange = { enabled ->
                         coroutineScope.launch {
                             sessionManager.setBiometricEnabled(enabled)
-                            Toast.makeText(context, if (enabled) "Đã bật khóa vân tay/PIN" else "Đã tắt khóa bảo vệ", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, if (enabled) "Đã bật khóa vân tay/PIN bảo vệ" else "Đã tắt khóa bảo vệ", Toast.LENGTH_SHORT).show()
                         }
                     },
                     colors = SwitchDefaults.colors(checkedThumbColor = MaterialTheme.colorScheme.secondary)
@@ -169,7 +232,12 @@ fun SettingsScreen(
         // Export Data
         OutlinedButton(
             onClick = {
-                Toast.makeText(context, "Dữ liệu JSON của bạn đã sẵn sàng xuất ra bộ nhớ máy.", Toast.LENGTH_LONG).show()
+                coroutineScope.launch {
+                    val uid = repository.getActiveUserId()
+                    val json = repository.exportAllUserDataJson(uid)
+                    exportedJsonText = json
+                    showExportDialog = true
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -231,6 +299,111 @@ fun SettingsScreen(
         }
     }
 
+    // Link Identity Dialog
+    if (showLinkIdentityDialog) {
+        AlertDialog(
+            onDismissRequest = { showLinkIdentityDialog = false },
+            title = { Text("Nâng Cấp Tài Khoản (Link Identity)") },
+            text = {
+                Column {
+                    Text("Nhập email và mật khẩu để liên kết tài khoản. Toàn bộ lịch sử chu kỳ và nhật ký của bạn sẽ được giữ nguyên vẹn.")
+                    Spacer(modifier = Modifier.height(14.dp))
+                    OutlinedTextField(
+                        value = linkEmail,
+                        onValueChange = { linkEmail = it },
+                        label = { Text("Email") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    OutlinedTextField(
+                        value = linkPassword,
+                        onValueChange = { linkPassword = it },
+                        label = { Text("Mật khẩu") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    if (linkErrorMessage.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(linkErrorMessage, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (linkEmail.isBlank() || linkPassword.length < 6) {
+                            linkErrorMessage = "Vui lòng nhập email hợp lệ và mật khẩu ít nhất 6 ký tự."
+                            return@Button
+                        }
+                        coroutineScope.launch {
+                            val res = repository.linkIdentity(linkEmail, linkPassword)
+                            if (res is AuthResult.Success) {
+                                showLinkIdentityDialog = false
+                                Toast.makeText(context, "Nâng cấp tài khoản thành công!", Toast.LENGTH_SHORT).show()
+                            } else if (res is AuthResult.Error) {
+                                linkErrorMessage = res.message
+                            }
+                        }
+                    }
+                ) {
+                    Text("Xác nhận")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showLinkIdentityDialog = false }) {
+                    Text("Hủy")
+                }
+            }
+        )
+    }
+
+    // Export JSON Dialog
+    if (showExportDialog) {
+        AlertDialog(
+            onDismissRequest = { showExportDialog = false },
+            title = { Text("Dữ Liệu Cá Nhân (JSON Export)") },
+            text = {
+                Column {
+                    Text("Dữ liệu chu kỳ và nhật ký sức khỏe của bạn đã được xuất dưới dạng JSON bảo mật:")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .padding(10.dp)
+                    ) {
+                        Text(
+                            text = exportedJsonText,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.verticalScroll(rememberScrollState())
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip = ClipData.newPlainText("CycleCare_Data_Export", exportedJsonText)
+                        clipboard.setPrimaryClip(clip)
+                        Toast.makeText(context, "Đã sao chép JSON vào bộ nhớ tạm!", Toast.LENGTH_SHORT).show()
+                        showExportDialog = false
+                    }
+                ) {
+                    Text("Sao chép vào Clipboard")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExportDialog = false }) {
+                    Text("Đóng")
+                }
+            }
+        )
+    }
+
+    // Delete Confirm Dialog
     if (showDeleteConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirmDialog = false },
@@ -254,6 +427,28 @@ fun SettingsScreen(
                     Text("Hủy")
                 }
             }
+        )
+    }
+}
+
+@Composable
+private fun ReminderSwitchItem(
+    title: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = title, style = MaterialTheme.typography.bodyMedium)
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(checkedThumbColor = MaterialTheme.colorScheme.primary)
         )
     }
 }

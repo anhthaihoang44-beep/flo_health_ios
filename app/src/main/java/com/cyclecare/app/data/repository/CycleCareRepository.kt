@@ -225,11 +225,98 @@ class CycleCareRepository(
     }
 
     // --------------------------------------------------------------------------
+    // PREGNANCY
+    // --------------------------------------------------------------------------
+    fun getActivePregnancyFlow(userId: String): Flow<com.cyclecare.app.domain.model.Pregnancy?> {
+        return database.pregnancyDao().getActivePregnancyFlow(userId).map { entity ->
+            entity?.let {
+                com.cyclecare.app.domain.model.Pregnancy(
+                    id = it.id,
+                    userId = it.userId,
+                    lmpDate = LocalDate.parse(it.lmpDate, dateFormatter),
+                    dueDate = LocalDate.parse(it.dueDate, dateFormatter),
+                    isActive = it.isActive,
+                    endedAt = it.endedAt?.let { d -> LocalDate.parse(d, dateFormatter) }
+                )
+            }
+        }
+    }
+
+    suspend fun savePregnancy(pregnancy: com.cyclecare.app.domain.model.Pregnancy) {
+        val entity = com.cyclecare.app.data.local.entity.PregnancyEntity(
+            id = pregnancy.id.ifEmpty { UUID.randomUUID().toString() },
+            userId = pregnancy.userId,
+            lmpDate = pregnancy.lmpDate.format(dateFormatter),
+            dueDate = pregnancy.dueDate.format(dateFormatter),
+            isActive = pregnancy.isActive,
+            endedAt = pregnancy.endedAt?.format(dateFormatter)
+        )
+        database.pregnancyDao().insertOrUpdate(entity)
+    }
+
+    // --------------------------------------------------------------------------
+    // REMINDERS
+    // --------------------------------------------------------------------------
+    fun getRemindersFlow(userId: String): Flow<List<com.cyclecare.app.data.local.entity.ReminderEntity>> {
+        return database.reminderDao().getRemindersFlow(userId)
+    }
+
+    suspend fun saveReminder(reminder: com.cyclecare.app.data.local.entity.ReminderEntity) {
+        database.reminderDao().insertOrUpdate(reminder)
+    }
+
+    // --------------------------------------------------------------------------
     // PRIVACY: EXPORT & DELETE
     // --------------------------------------------------------------------------
+    suspend fun exportAllUserDataJson(userId: String): String {
+        val profile = database.profileDao().getProfile()
+        val cycles = database.cycleDao().getCycles(userId)
+        val logs = database.dailyLogDao().getLogsBetween(userId, "2000-01-01", "2099-12-31")
+
+        val json = org.json.JSONObject().apply {
+            put("exported_at", java.time.Instant.now().toString())
+            put("app", "CycleCare")
+            put("user_id", userId)
+            put("profile", org.json.JSONObject().apply {
+                put("display_name", profile?.displayName ?: "")
+                put("goal", profile?.goal ?: "track")
+                put("avg_cycle_length", profile?.avgCycleLength ?: 28)
+                put("avg_period_length", profile?.avgPeriodLength ?: 5)
+                put("is_anonymous", profile?.isAnonymous ?: true)
+            })
+            val cyclesArray = org.json.JSONArray()
+            cycles.forEach { c ->
+                cyclesArray.put(org.json.JSONObject().apply {
+                    put("id", c.id)
+                    put("start_date", c.startDate)
+                    put("end_date", c.endDate ?: "")
+                    put("cycle_length", c.cycleLength ?: 0)
+                    put("period_length", c.periodLength ?: 0)
+                })
+            }
+            put("cycles", cyclesArray)
+
+            val logsArray = org.json.JSONArray()
+            logs.forEach { l ->
+                logsArray.put(org.json.JSONObject().apply {
+                    put("date", l.logDate)
+                    put("mood", l.mood ?: "")
+                    put("cramps_level", l.crampsLevel ?: 0)
+                    put("libido", l.libido ?: 0)
+                    put("symptoms", l.symptoms)
+                    put("note", l.note ?: "")
+                })
+            }
+            put("daily_logs", logsArray)
+        }
+        return json.toString(2)
+    }
+
     suspend fun clearAllData(userId: String) {
         database.cycleDao().clearUserCycles(userId)
         database.dailyLogDao().clearUserLogs(userId)
+        database.pregnancyDao().clearUserPregnancies(userId)
+        database.reminderDao().clearUserReminders(userId)
         database.profileDao().clearProfile()
         sessionManager.clearSession()
     }

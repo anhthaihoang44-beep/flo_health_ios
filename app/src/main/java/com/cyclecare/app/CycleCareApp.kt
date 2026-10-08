@@ -29,6 +29,10 @@ class CycleCareApp : Application() {
         CoroutineScope(Dispatchers.IO).launch {
             repository.seedSampleArticlesIfEmpty()
         }
+
+        // Schedule daily reminders and background sync
+        com.cyclecare.app.data.worker.ReminderWorker.scheduleDailyReminders(this)
+        com.cyclecare.app.data.worker.OfflineSyncWorker.schedulePeriodicSync(this)
     }
 
     companion object {

@@ -7,6 +7,6 @@ plugins {
 }
 
 allprojects {
-    val buildBase = file("C:/Users/HP/.cyclecare_build")
+    val buildBase = file("${project.rootDir}/.build")
     layout.buildDirectory.set(if (this == rootProject) file("$buildBase/root") else file("$buildBase/${project.name}"))
 }
