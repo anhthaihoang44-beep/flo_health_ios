@@ -6,12 +6,12 @@ enum HealthGoal: String, Codable, CaseIterable {
     case pregnant = "pregnant"
     case perimenopause = "perimenopause"
 
-    var titleVi: String {
+    var titleEn: String {
         switch self {
-        case .track: return "Theo dõi chu kỳ kinh nguyệt"
-        case .conceive: return "Kế hoạch thụ thai"
-        case .pregnant: return "Đang mang thai"
-        case .perimenopause: return "Giai đoạn tiền mãn kinh"
+        case .track: return "Track Cycle"
+        case .conceive: return "Try to Conceive"
+        case .pregnant: return "Pregnancy"
+        case .perimenopause: return "Perimenopause"
         }
     }
 }
@@ -28,7 +28,7 @@ struct UserProfile: Codable, Identifiable {
 
     init(
         id: String = UUID().uuidString,
-        displayName: String = "Bạn",
+        displayName: String = "Anonymous User",
         birthYear: Int? = nil,
         goal: HealthGoal = .track,
         avgCycleLength: Int = 28,

@@ -9,7 +9,7 @@ struct CalendarView: View {
     @State private var showEditSheet = false
 
     private let calendar = Calendar.current
-    private let daysOfWeek = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+    private let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
     private var profile: UserProfile {
         repository.currentProfile ?? UserProfile()
@@ -98,9 +98,9 @@ struct CalendarView: View {
 
                 // Legend
                 HStack(spacing: 16) {
-                    LegendItem(color: .periodPink, title: "Hành kinh")
-                    LegendItem(color: .fertileLight, title: "Thụ thai")
-                    LegendItem(color: .ovulationTeal.opacity(0.3), title: "Rụng trứng")
+                    LegendItem(color: .periodPink, title: "Period")
+                    LegendItem(color: .fertileLight, title: "Fertile")
+                    LegendItem(color: .ovulationTeal.opacity(0.3), title: "Ovulation")
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -123,7 +123,7 @@ struct CalendarView: View {
                     } label: {
                         HStack {
                             Image(systemName: "drop.fill")
-                            Text("Bắt đầu kỳ kinh tại ngày này")
+                            Text("Log Period Start Here")
                         }
                         .font(.headline)
                         .frame(maxWidth: .infinity)
@@ -139,7 +139,7 @@ struct CalendarView: View {
                     } label: {
                         HStack {
                             Image(systemName: "pencil")
-                            Text("Ghi nhật ký ngày này")
+                            Text("Log Daily Symptoms")
                         }
                         .font(.headline)
                         .frame(maxWidth: .infinity)

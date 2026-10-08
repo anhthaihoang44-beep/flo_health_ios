@@ -41,11 +41,11 @@ struct PregnancyView: View {
 
     private var trimester: String {
         if currentWeek <= 13 {
-            return "Tam cá nguyệt 1 (Tuần 1 - 13)"
+            return "1st Trimester (Weeks 1 - 13)"
         } else if currentWeek <= 27 {
-            return "Tam cá nguyệt 2 (Tuần 14 - 27)"
+            return "2nd Trimester (Weeks 14 - 27)"
         } else {
-            return "Tam cá nguyệt 3 (Tuần 28 - 40+)"
+            return "3rd Trimester (Weeks 28 - 40+)"
         }
     }
 
@@ -59,7 +59,7 @@ struct PregnancyView: View {
                 // Header with due date and adjustment
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Hành trình Thai kỳ")
+                        Text("Pregnancy Journey")
                             .font(.title2)
                             .fontWeight(.bold)
                         Text(trimester)
@@ -73,7 +73,7 @@ struct PregnancyView: View {
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "calendar")
-                            Text("Chỉnh ngày")
+                            Text("Edit Date")
                         }
                         .font(.caption)
                         .fontWeight(.semibold)
@@ -105,15 +105,15 @@ struct PregnancyView: View {
                         .rotationEffect(.degrees(-90))
 
                     VStack(spacing: 6) {
-                        Text("Tuần \(currentWeek)")
+                        Text("Week \(currentWeek)")
                             .font(.system(size: 38, weight: .bold))
                             .foregroundColor(.cycleLavender)
 
-                        Text("Ngày thứ \(currentDayOfWeek)")
+                        Text("Day \(currentDayOfWeek)")
                             .font(.headline)
                             .foregroundColor(.secondary)
 
-                        Text("Còn \(daysRemaining) ngày đến dự sinh")
+                        Text("\(daysRemaining) days until due date")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .padding(.horizontal, 10)
@@ -121,7 +121,7 @@ struct PregnancyView: View {
                             .background(Color.cycleSurfaceVariant)
                             .cornerRadius(10)
 
-                        Text("Dự sinh: \(dueDate.formatted(date: .abbreviated, time: .omitted))")
+                        Text("Due Date: \(dueDate.formatted(date: .abbreviated, time: .omitted))")
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -132,9 +132,9 @@ struct PregnancyView: View {
                 VStack(alignment: .leading, spacing: 14) {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Kích thước bé yêu hôm nay")
+                            Text("Baby's Size Today")
                                 .font(.headline)
-                            Text("Tương đương một \(milestone.fruitComparison)")
+                            Text("Size of a \(milestone.fruitComparison)")
                                 .font(.subheadline)
                                 .foregroundColor(.cycleRose)
                                 .fontWeight(.semibold)
@@ -147,7 +147,7 @@ struct PregnancyView: View {
 
                     HStack(spacing: 24) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Chiều dài ước tính")
+                            Text("Est. Length")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                             Text(String(format: "%.1f cm", milestone.lengthCm))
@@ -159,7 +159,7 @@ struct PregnancyView: View {
                             .frame(height: 30)
 
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Cân nặng ước tính")
+                            Text("Est. Weight")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                             Text(milestone.weightGrams >= 1000 ?
@@ -185,7 +185,7 @@ struct PregnancyView: View {
                 // Interactive Kick Counter Widget
                 VStack(alignment: .leading, spacing: 14) {
                     HStack {
-                        Label("Bộ đếm cử động thai (Thai máy)", systemImage: "figure.and.child.holdinghands")
+                        Label("Fetal Kick Counter", systemImage: "figure.and.child.holdinghands")
                             .font(.headline)
                             .foregroundColor(.cycleLavender)
                         Spacer()
@@ -207,7 +207,7 @@ struct PregnancyView: View {
                             Text("\(kickCount)")
                                 .font(.system(size: 42, weight: .bold))
                                 .foregroundColor(.primary)
-                            Text("Lần cử động ghi nhận")
+                            Text("Logged kicks")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -230,7 +230,7 @@ struct PregnancyView: View {
                         Button {
                             toggleKickCountingSession()
                         } label: {
-                            Text(isKickCountingActive ? "Kết thúc phiên" : "Bắt đầu đếm")
+                            Text(isKickCountingActive ? "End Session" : "Start Counting")
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .frame(maxWidth: .infinity)
@@ -240,7 +240,7 @@ struct PregnancyView: View {
                                 .cornerRadius(12)
                         }
 
-                        Button("Đặt lại") {
+                        Button("Reset") {
                             resetKickCount()
                         }
                         .font(.caption)
@@ -251,7 +251,7 @@ struct PregnancyView: View {
                         .cornerRadius(12)
                     }
 
-                    Text("Lời khuyên: Mẹ nên đếm cử động thai 2-3 lần/ngày sau bữa ăn. Trung bình có ít nhất 4 cử động trong 1 giờ hoặc 10 cử động trong 2 giờ.")
+                    Text("Tip: Count fetal kicks 2-3 times daily after meals. Aim for at least 4 kicks in 1 hour or 10 kicks within 2 hours.")
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
@@ -264,7 +264,7 @@ struct PregnancyView: View {
                     HStack {
                         Image(systemName: "stethoscope")
                             .foregroundColor(.cycleRose)
-                        Text("Lời khuyên tuần \(currentWeek)")
+                        Text("Week \(currentWeek) Doctor's Advice")
                             .font(.headline)
                     }
 
@@ -285,7 +285,7 @@ struct PregnancyView: View {
             NavigationStack {
                 VStack(spacing: 20) {
                     DatePicker(
-                        "Ngày đầu kỳ kinh cuối (LMP)",
+                        "Last Menstrual Period (LMP)",
                         selection: $lmpDate,
                         in: ...Date(),
                         displayedComponents: [.date]
@@ -293,7 +293,7 @@ struct PregnancyView: View {
                     .datePickerStyle(.graphical)
                     .padding()
 
-                    Button("Xác nhận & Cập nhật") {
+                    Button("Confirm & Save") {
                         showDatePicker = false
                     }
                     .font(.headline)
@@ -304,11 +304,11 @@ struct PregnancyView: View {
                     .cornerRadius(25)
                     .padding(.horizontal)
                 }
-                .navigationTitle("Cài đặt thai kỳ")
+                .navigationTitle("Pregnancy Setup")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Đóng") {
+                        Button("Close") {
                             showDatePicker = false
                         }
                     }

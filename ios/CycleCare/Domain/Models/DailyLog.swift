@@ -28,12 +28,12 @@ public enum MoodType: String, Codable, CaseIterable {
 
     public var label: String {
         switch self {
-        case .happy: return "Vui vẻ"
-        case .calm: return "Bình yên"
-        case .sad: return "Buồn bã"
-        case .irritable: return "Khó chịu"
-        case .tired: return "Mệt mỏi"
-        case .anxious: return "Lo âu"
+        case .happy: return "Happy"
+        case .calm: return "Calm"
+        case .sad: return "Sad"
+        case .irritable: return "Irritable"
+        case .tired: return "Fatigued"
+        case .anxious: return "Anxious"
         }
     }
 }
@@ -59,12 +59,12 @@ public enum SymptomType: String, Codable, CaseIterable {
 
     public var label: String {
         switch self {
-        case .cramps: return "Đau bụng"
-        case .headache: return "Đau đầu"
-        case .bloating: return "Đầy hơi"
-        case .backache: return "Đau lưng"
-        case .breastTenderness: return "Căng ngực"
-        case .acne: return "Nổi mụn"
+        case .cramps: return "Cramps"
+        case .headache: return "Headache"
+        case .bloating: return "Bloating"
+        case .backache: return "Backache"
+        case .breastTenderness: return "Tender Breasts"
+        case .acne: return "Acne"
         }
     }
 }
@@ -79,12 +79,12 @@ public enum DischargeType: String, Codable, CaseIterable {
 
     public var label: String {
         switch self {
-        case .none: return "Không có"
-        case .dry: return "Khô ráo"
-        case .sticky: return "Dính"
-        case .creamy: return "Đục kem"
-        case .eggwhite: return "Lòng trắng"
-        case .watery: return "Lỏng như nước"
+        case .none: return "None"
+        case .dry: return "Dry"
+        case .sticky: return "Sticky"
+        case .creamy: return "Creamy"
+        case .eggwhite: return "Egg White"
+        case .watery: return "Watery"
         }
     }
 }
@@ -97,10 +97,10 @@ public enum ActivityLevel: String, Codable, CaseIterable {
 
     public var label: String {
         switch self {
-        case .none: return "Không vận động"
-        case .light: return "Nhẹ nhàng"
-        case .moderate: return "Vừa phải"
-        case .intense: return "Cường độ cao"
+        case .none: return "No Exercise"
+        case .light: return "Light"
+        case .moderate: return "Moderate"
+        case .intense: return "Intense"
         }
     }
 }

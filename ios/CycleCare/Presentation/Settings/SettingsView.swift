@@ -42,7 +42,7 @@ struct SettingsView: View {
                                 .font(.headline)
 
                             HStack(spacing: 6) {
-                                Text(profile.goal.titleVi)
+                                Text(profile.goal.titleEn)
                                     .font(.caption2)
                                     .padding(.horizontal, 8)
                                     .padding(.vertical, 2)
@@ -51,7 +51,7 @@ struct SettingsView: View {
                                     .cornerRadius(8)
 
                                 if profile.isAnonymous {
-                                    Text("Tài khoản ẩn danh")
+                                    Text("Anonymous")
                                         .font(.caption2)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 2)
@@ -59,7 +59,7 @@ struct SettingsView: View {
                                         .foregroundColor(.secondary)
                                         .cornerRadius(8)
                                 } else {
-                                    Text("Đã liên kết")
+                                    Text("Linked")
                                         .font(.caption2)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 2)
@@ -79,7 +79,7 @@ struct SettingsView: View {
                             HStack {
                                 Image(systemName: "envelope.badge")
                                     .foregroundColor(.cycleRose)
-                                Text("Liên kết Email để bảo lưu dữ liệu")
+                                Text("Link Email to Backup Data")
                                     .font(.subheadline)
                                     .foregroundColor(.primary)
                                 Spacer()
@@ -90,7 +90,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Hồ sơ người dùng")
+                    Text("User Profile")
                 }
 
                 // Section: Security & Privacy
@@ -100,9 +100,9 @@ struct SettingsView: View {
                             Image(systemName: "faceid")
                                 .foregroundColor(.cycleRose)
                             VStack(alignment: .leading) {
-                                Text("Khóa bằng Face ID / Touch ID")
+                                Text("Face ID / Touch ID Lock")
                                     .font(.subheadline)
-                                Text("Bảo vệ dữ liệu riêng tư khi mở app")
+                                Text("Protect private health data when opening app")
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -110,7 +110,7 @@ struct SettingsView: View {
                     }
                     .onChange(of: isBiometricsEnabled) { enabled in
                         if enabled {
-                            biometric.authenticateUser(reason: "Bật bảo mật Face ID cho CycleCare") { success in
+                            biometric.authenticateUser(reason: "Enable Face ID security for CycleCare") { success in
                                 if !success {
                                     isBiometricsEnabled = false
                                 }
@@ -127,10 +127,10 @@ struct SettingsView: View {
                             Image(systemName: "heart.fill")
                                 .foregroundColor(.periodRed)
                             VStack(alignment: .leading) {
-                                Text("Đồng bộ Apple Health")
+                                Text("Sync with Apple Health")
                                     .font(.subheadline)
                                     .foregroundColor(.primary)
-                                Text("Chia sẻ dữ liệu kinh nguyệt với ứng dụng Sức khỏe")
+                                Text("Share cycle tracking and flow with Apple Health")
                                     .font(.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -141,7 +141,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Bảo mật & Tích hợp")
+                    Text("Security & Integrations")
                 }
 
                 // Section: Reminders & Notifications
@@ -150,7 +150,7 @@ struct SettingsView: View {
                         HStack(spacing: 12) {
                             Image(systemName: "bell.badge.fill")
                                 .foregroundColor(.cycleLavender)
-                            Text("Nhắc nhở chu kỳ & uống thuốc")
+                            Text("Cycle & Daily Log Reminders")
                                 .font(.subheadline)
                         }
                     }
@@ -168,7 +168,7 @@ struct SettingsView: View {
 
                     if isRemindersEnabled {
                         DatePicker(
-                            "Giờ nhắc hàng ngày",
+                            "Daily Reminder Time",
                             selection: $reminderDate,
                             displayedComponents: [.hourAndMinute]
                         )
@@ -178,7 +178,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Thông báo")
+                    Text("Notifications")
                 }
 
                 // Section: Data Ownership & GDPR
@@ -190,7 +190,7 @@ struct SettingsView: View {
                         HStack(spacing: 12) {
                             Image(systemName: "square.and.arrow.up")
                                 .foregroundColor(.blue)
-                            Text("Xuất toàn bộ dữ liệu (JSON)")
+                            Text("Export All Personal Data (JSON)")
                                 .font(.subheadline)
                                 .foregroundColor(.primary)
                         }
@@ -202,13 +202,13 @@ struct SettingsView: View {
                         HStack(spacing: 12) {
                             Image(systemName: "trash.fill")
                                 .foregroundColor(.red)
-                            Text("Xóa vĩnh viễn tài khoản & dữ liệu")
+                            Text("Delete Account & Wipe All Data")
                                 .font(.subheadline)
                                 .foregroundColor(.red)
                         }
                     }
                 } header: {
-                    Text("Dữ liệu & Quyền riêng tư")
+                    Text("Data & Privacy")
                 }
 
                 // Section: Medical Disclaimer & Info
@@ -217,11 +217,11 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "cross.case.fill")
                                 .foregroundColor(.cycleRose)
-                            Text("Tuyên bố miễn trừ trách nhiệm y tế")
+                            Text("Medical Disclaimer")
                                 .font(.caption)
                                 .fontWeight(.bold)
                         }
-                        Text("CycleCare không phải là thiết bị y tế và không đưa ra chẩn đoán lâm sàng. Các dự đoán chu kỳ chỉ mang tính chất tham khảo dựa trên thuật toán thống kê. Vui lòng tham khảo ý kiến bác sĩ phụ khoa khi có dấu hiệu bất thường.")
+                        Text("CycleCare is not a medical diagnostic device. Predictions are statistical estimates only. Always consult a licensed healthcare professional for clinical advice.")
                             .font(.caption2)
                             .foregroundColor(.secondary)
                             .lineSpacing(3)
@@ -229,7 +229,7 @@ struct SettingsView: View {
                     .padding(.vertical, 4)
 
                     HStack {
-                        Text("Phiên bản")
+                        Text("Version")
                             .font(.subheadline)
                         Spacer()
                         Text("CycleCare 1.0.0 (Build 1)")
@@ -237,23 +237,23 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                     }
                 } header: {
-                    Text("Thông tin pháp lý")
+                    Text("About & Legal")
                 }
             }
-            .navigationTitle("Cài đặt")
+            .navigationTitle("Settings")
             .sheet(isPresented: $showLinkIdentitySheet) {
                 LinkIdentitySheet(repository: repository)
             }
             .sheet(isPresented: $showExportSheet) {
                 ExportDataSheet(jsonString: exportedJsonString)
             }
-            .alert("Xác nhận xóa toàn bộ dữ liệu?", isPresented: $showDeleteConfirmAlert) {
-                Button("Hủy", role: .cancel) {}
-                Button("Xóa vĩnh viễn", role: .destructive) {
+            .alert("Confirm Data Deletion?", isPresented: $showDeleteConfirmAlert) {
+                Button("Cancel", role: .cancel) {}
+                Button("Delete Permanently", role: .destructive) {
                     repository.clearAllData()
                 }
             } message: {
-                Text("Hành động này sẽ xóa sạch dữ liệu chu kỳ, nhật ký sức khỏe trên thiết bị này và không thể phục hồi.")
+                Text("This action will permanently remove all your cycle history and health logs from this device and cannot be undone.")
             }
         }
     }
@@ -274,17 +274,17 @@ struct LinkIdentitySheet: View {
         NavigationStack {
             Form {
                 Section {
-                    Text("Bảo vệ dữ liệu chu kỳ của bạn khi đổi điện thoại hoặc đăng nhập nhiều thiết bị.")
+                    Text("Securely preserve your cycle history when switching phones or logging in on multiple devices.")
                         .font(.caption)
                         .foregroundColor(.secondary)
 
-                    TextField("Email của bạn", text: $email)
+                    TextField("Email Address", text: $email)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
 
-                    SecureField("Mật khẩu mới", text: $password)
+                    SecureField("Password (min. 6 characters)", text: $password)
                 } header: {
-                    Text("Thông tin đăng nhập")
+                    Text("Account Credentials")
                 }
 
                 if let err = errorMessage {
@@ -306,7 +306,7 @@ struct LinkIdentitySheet: View {
                                 Spacer()
                             }
                         } else {
-                            Text("Liên kết tài khoản")
+                            Text("Link Account")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
@@ -317,21 +317,21 @@ struct LinkIdentitySheet: View {
                     .disabled(email.isEmpty || password.count < 6 || isLoading)
                 }
             }
-            .navigationTitle("Nâng cấp tài khoản")
+            .navigationTitle("Upgrade Account")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Đóng") {
+                    Button("Close") {
                         dismiss()
                     }
                 }
             }
-            .alert("Liên kết thành công!", isPresented: $successAlert) {
+            .alert("Account Linked Successfully!", isPresented: $successAlert) {
                 Button("OK") {
                     dismiss()
                 }
             } message: {
-                Text("Tài khoản của bạn đã được liên kết với email \(email).")
+                Text("Your cycle data is now linked with \(email).")
             }
         }
     }
@@ -384,7 +384,7 @@ struct ExportDataSheet: View {
                     } label: {
                         HStack {
                             Image(systemName: copied ? "checkmark" : "doc.on.doc")
-                            Text(copied ? "Đã sao chép!" : "Sao chép JSON")
+                            Text(copied ? "Copied!" : "Copy JSON")
                         }
                         .font(.headline)
                         .foregroundColor(.white)
@@ -406,11 +406,11 @@ struct ExportDataSheet: View {
                 .padding(.horizontal)
             }
             .padding(.vertical)
-            .navigationTitle("Dữ liệu cá nhân JSON")
+            .navigationTitle("Personal JSON Data")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Xong") {
+                    Button("Done") {
                         dismiss()
                     }
                 }

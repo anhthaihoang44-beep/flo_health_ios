@@ -25,7 +25,7 @@ struct DailyLogView: View {
                 VStack(spacing: 24) {
                     // Date Selector
                     DatePicker(
-                        "Ngày ghi nhận",
+                        "Log Date",
                         selection: $selectedDate,
                         displayedComponents: [.date]
                     )
@@ -39,15 +39,15 @@ struct DailyLogView: View {
 
                     // Menstrual Flow Section
                     VStack(alignment: .leading, spacing: 12) {
-                        Label("Lượng máu kinh", systemImage: "drop.fill")
+                        Label("Menstrual Flow", systemImage: "drop.fill")
                             .font(.headline)
                             .foregroundColor(.periodRed)
 
                         HStack(spacing: 8) {
-                            flowButton(title: "Không có", value: .none)
-                            flowButton(title: "Nhẹ", value: .light)
-                            flowButton(title: "Vừa", value: .medium)
-                            flowButton(title: "Nhiều", value: .heavy)
+                            flowButton(title: "None", value: .none)
+                            flowButton(title: "Light", value: .light)
+                            flowButton(title: "Medium", value: .medium)
+                            flowButton(title: "Heavy", value: .heavy)
                         }
                     }
                     .padding()
@@ -56,7 +56,7 @@ struct DailyLogView: View {
 
                     // Mood Section
                     VStack(alignment: .leading, spacing: 12) {
-                        Label("Tâm trạng", systemImage: "face.smiling.fill")
+                        Label("Mood", systemImage: "face.smiling.fill")
                             .font(.headline)
                             .foregroundColor(.cycleRose)
 
@@ -90,7 +90,7 @@ struct DailyLogView: View {
 
                     // Symptoms Section
                     VStack(alignment: .leading, spacing: 12) {
-                        Label("Triệu chứng cơ thể", systemImage: "cross.case.fill")
+                        Label("Physical Symptoms", systemImage: "cross.case.fill")
                             .font(.headline)
                             .foregroundColor(.cycleLavender)
 
@@ -126,7 +126,7 @@ struct DailyLogView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                Text("Mức độ đau bụng:")
+                                Text("Cramps Intensity:")
                                     .font(.subheadline)
                                 Spacer()
                                 Text("\(Int(crampsLevel))/5")
@@ -142,7 +142,7 @@ struct DailyLogView: View {
 
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                Text("Nhu cầu tình dục:")
+                                Text("Sex Drive / Libido:")
                                     .font(.subheadline)
                                 Spacer()
                                 Text("\(Int(libidoLevel))/3")
@@ -158,10 +158,10 @@ struct DailyLogView: View {
 
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                Text("Thời gian ngủ:")
+                                Text("Sleep Duration:")
                                     .font(.subheadline)
                                 Spacer()
-                                Text(String(format: "%.1f giờ", sleepHours))
+                                Text(String(format: "%.1f hrs", sleepHours))
                                     .font(.subheadline)
                                     .fontWeight(.bold)
                                     .foregroundColor(.cycleLavender)
@@ -176,7 +176,7 @@ struct DailyLogView: View {
 
                     // Cervical Mucus / Discharge
                     VStack(alignment: .leading, spacing: 12) {
-                        Label("Dịch âm đạo", systemImage: "bubbles.and.sparkles.fill")
+                        Label("Cervical Mucus", systemImage: "bubbles.and.sparkles.fill")
                             .font(.headline)
                             .foregroundColor(.fertilePurple)
 
@@ -203,10 +203,10 @@ struct DailyLogView: View {
 
                     // Notes
                     VStack(alignment: .leading, spacing: 8) {
-                        Label("Ghi chú cá nhân", systemImage: "note.text")
+                        Label("Personal Notes", systemImage: "note.text")
                             .font(.headline)
 
-                        TextField("Thêm ghi chú triệu chứng, tâm sự hôm nay...", text: $notes, axis: .vertical)
+                        TextField("Add personal symptoms, feelings or thoughts today...", text: $notes, axis: .vertical)
                             .lineLimit(3...6)
                             .padding()
                             .background(Color.cycleSurfaceVariant)
@@ -220,7 +220,7 @@ struct DailyLogView: View {
                     Button {
                         saveCurrentLog()
                     } label: {
-                        Text("Lưu nhật ký")
+                        Text("Save Daily Log")
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -233,23 +233,23 @@ struct DailyLogView: View {
                 .padding()
             }
             .background(Color.cycleBackground.ignoresSafeArea())
-            .navigationTitle("Nhật ký ngày")
+            .navigationTitle("Daily Log")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if let dismiss = onDismiss {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Đóng") {
+                        Button("Close") {
                             dismiss()
                         }
                     }
                 }
             }
-            .alert("Đã lưu nhật ký", isPresented: $showSavedAlert) {
+            .alert("Log Saved", isPresented: $showSavedAlert) {
                 Button("OK") {
                     onDismiss?()
                 }
             } message: {
-                Text("Dữ liệu sức khỏe hôm nay đã được ghi nhận an toàn.")
+                Text("Your daily health data has been securely saved.")
             }
             .onAppear {
                 selectedDate = initialDate

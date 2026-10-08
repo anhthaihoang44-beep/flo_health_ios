@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>vi</string>
+	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>CycleCare</string>
 	<key>CFBundleExecutable</key>
@@ -23,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
-	<string>CycleCare sử dụng Face ID để bảo vệ an toàn thông tin chu kỳ và nhật ký sức khỏe cá nhân của bạn.</string>
+	<string>CycleCare uses Face ID to securely protect your menstrual cycle and private health log.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>CycleCare cần đọc dữ liệu chu kỳ kinh nguyệt để đồng bộ hóa với ứng dụng Sức khỏe của Apple.</string>
+	<string>CycleCare needs access to read menstrual cycle data to sync with Apple Health.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>CycleCare cần ghi nhận dữ liệu chu kỳ kinh nguyệt vào ứng dụng Sức khỏe của Apple.</string>
+	<string>CycleCare writes cycle tracking records and symptoms to Apple Health.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -5,7 +5,7 @@ class BiometricAuthManager {
     static let shared = BiometricAuthManager()
     private init() {}
 
-    func authenticateUser(reason: String = "Xác thực để mở khóa CycleCare", completion: @escaping (Bool) -> Void) {
+    func authenticateUser(reason: String = "Authenticate to unlock CycleCare", completion: @escaping (Bool) -> Void) {
         let context = LAContext()
         var error: NSError?
 

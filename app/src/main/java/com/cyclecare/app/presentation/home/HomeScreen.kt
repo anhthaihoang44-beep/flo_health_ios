@@ -128,7 +128,7 @@ fun HomeScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val displayName = when (val name = profile?.displayName) {
-                "Người dùng ẩn danh", null, "" -> "Anonymous User"
+                null, "", "Anonymous User", "Người dùng ẩn danh" -> "Anonymous User"
                 else -> name
             }
             Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {

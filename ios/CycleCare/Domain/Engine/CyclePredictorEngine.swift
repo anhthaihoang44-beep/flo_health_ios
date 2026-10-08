@@ -144,7 +144,7 @@ class CyclePredictorEngine {
     ) -> DayStatus {
         let targetCal = calendar.startOfDay(for: targetDate)
 
-        // Thực tế đang hành kinh
+        // Actual logged period
         for cycle in recentCycles {
             let start = calendar.startOfDay(for: cycle.startDate)
             let periodLen = cycle.periodLength ?? prediction.averagePeriodLength
@@ -154,20 +154,20 @@ class CyclePredictorEngine {
             }
         }
 
-        // Ngày rụng trứng
+        // Ovulation day
         let ovDay = calendar.startOfDay(for: prediction.ovulationDate)
         if targetCal == ovDay {
             return .ovulation
         }
 
-        // Cửa sổ thụ thai
+        // Fertile window
         let fStart = calendar.startOfDay(for: prediction.fertileWindowStart)
         let fEnd = calendar.startOfDay(for: prediction.fertileWindowEnd)
         if targetCal >= fStart && targetCal <= fEnd {
             return .fertile
         }
 
-        // Kỳ kinh dự đoán
+        // Predicted period
         let pStart = calendar.startOfDay(for: prediction.nextPeriodStartDate)
         let pEnd = calendar.date(byAdding: .day, value: prediction.averagePeriodLength - 1, to: pStart) ?? pStart
         if targetCal >= pStart && targetCal <= pEnd {

@@ -22,7 +22,7 @@ class SupabaseManager {
         }
 
         guard let url = URL(string: "\(supabaseUrl)/auth/v1/signup") else {
-            return .failure("URL không hợp lệ")
+            return .failure("Invalid URL")
         }
 
         var request = URLRequest(url: url)
@@ -54,7 +54,7 @@ class SupabaseManager {
         }
 
         guard let url = URL(string: "\(supabaseUrl)/auth/v1/token?grant_type=password") else {
-            return .failure("URL không hợp lệ")
+            return .failure("Invalid URL")
         }
 
         var request = URLRequest(url: url)
@@ -74,7 +74,7 @@ class SupabaseManager {
                     return .success(userId: id, email: email, isAnonymous: false)
                 }
             }
-            return .failure("Đăng nhập thất bại. Vui lòng kiểm tra email và mật khẩu.")
+            return .failure("Sign in failed. Please check your email and password.")
         } catch {
             return .failure(error.localizedDescription)
         }

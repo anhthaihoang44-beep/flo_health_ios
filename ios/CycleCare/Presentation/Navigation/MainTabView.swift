@@ -10,7 +10,7 @@ struct MainTabView: View {
         TabView(selection: $selectedTab) {
             HomeView(repository: repository, selectedTab: $selectedTab)
                 .tabItem {
-                    Label("Trang chủ", systemImage: "circle.circle")
+                    Label("Home", systemImage: "circle.circle")
                 }
                 .tag(0)
 
@@ -19,25 +19,25 @@ struct MainTabView: View {
                 selectedTab = 2
             }
             .tabItem {
-                Label("Lịch", systemImage: "calendar")
+                Label("Calendar", systemImage: "calendar")
             }
             .tag(1)
 
             DailyLogView(repository: repository, initialDate: logDateForTab)
                 .tabItem {
-                    Label("Nhật ký", systemImage: "plus.circle.fill")
+                    Label("Daily Log", systemImage: "plus.circle.fill")
                 }
                 .tag(2)
 
             InsightsView(repository: repository)
                 .tabItem {
-                    Label("Khám phá", systemImage: "chart.bar.xaxis")
+                    Label("Insights", systemImage: "chart.bar.xaxis")
                 }
                 .tag(3)
 
             SettingsView(repository: repository)
                 .tabItem {
-                    Label("Cài đặt", systemImage: "gearshape.fill")
+                    Label("Settings", systemImage: "gearshape.fill")
                 }
                 .tag(4)
         }

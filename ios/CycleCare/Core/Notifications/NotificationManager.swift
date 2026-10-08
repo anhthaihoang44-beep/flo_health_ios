@@ -19,8 +19,8 @@ class NotificationManager {
 
     func schedulePeriodReminder(daysUntil: Int) {
         let content = UNMutableNotificationContent()
-        content.title = "Nhắc nhở kỳ kinh - CycleCare"
-        content.body = "Kỳ kinh nguyệt của bạn dự kiến sẽ bắt đầu trong \(daysUntil) ngày tới. Hãy chuẩn bị sẵn sàng nhé!"
+        content.title = "Period Reminder - CycleCare"
+        content.body = "Your period is predicted to start in \(daysUntil) days. Listen to your body and be prepared!"
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3600 * 24, repeats: false)
@@ -30,8 +30,8 @@ class NotificationManager {
 
     func scheduleDailyLogReminder(hour: Int = 20, minute: Int = 0) {
         let content = UNMutableNotificationContent()
-        content.title = "Dành 1 phút lắng nghe cơ thể"
-        content.body = "Hôm nay bạn cảm thấy thế nào? Hãy ghi lại tâm trạng và các triệu chứng vào CycleCare nhé."
+        content.title = "Take a moment for yourself"
+        content.body = "How are you feeling today? Take a quick second to log your symptoms and mood in CycleCare."
         content.sound = .default
 
         var dateComponents = DateComponents()

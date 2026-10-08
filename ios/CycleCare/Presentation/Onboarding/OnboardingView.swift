@@ -34,11 +34,11 @@ struct OnboardingView: View {
 
     private var goalSelectionStep: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Chào mừng đến với CycleCare")
+            Text("Welcome to CycleCare")
                 .font(.system(size: 30, weight: .bold))
                 .foregroundColor(.primary)
 
-            Text("Chọn mục tiêu chính để ứng dụng cá nhân hóa các dự đoán dành riêng cho bạn.")
+            Text("Choose your primary health goal so we can tailor predictions specifically for you.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
@@ -49,7 +49,7 @@ struct OnboardingView: View {
                         selectedGoal = goal
                     } label: {
                         HStack {
-                            Text(goal.titleVi)
+                            Text(goal.titleEn)
                                 .font(.headline)
                                 .foregroundColor(.primary)
                             Spacer()
@@ -75,7 +75,7 @@ struct OnboardingView: View {
             Button {
                 step = 2
             } label: {
-                Text("Tiếp tục")
+                Text("Continue")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .frame(height: 54)
@@ -88,18 +88,18 @@ struct OnboardingView: View {
 
     private var cycleParametersStep: some View {
         VStack(alignment: .leading, spacing: 24) {
-            Text("Thông số chu kỳ")
+            Text("Cycle Parameters")
                 .font(.system(size: 28, weight: .bold))
 
-            Text("Giúp thuật toán ước tính chính xác ngày rụng trứng và kỳ kinh kế tiếp.")
+            Text("Helps our algorithms accurately forecast your fertile window and next cycle.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
             // Cycle Length Card
             VStack(alignment: .leading, spacing: 10) {
-                Text("Chu kỳ của bạn thường kéo dài bao lâu?")
+                Text("How long is your menstrual cycle?")
                     .font(.headline)
-                Text("\(Int(cycleLength)) ngày")
+                Text("\(Int(cycleLength)) days")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.cycleRose)
                 Slider(value: $cycleLength, in: 21...40, step: 1)
@@ -111,9 +111,9 @@ struct OnboardingView: View {
 
             // Period Length Card
             VStack(alignment: .leading, spacing: 10) {
-                Text("Mỗi kỳ kinh kéo dài bao nhiêu ngày?")
+                Text("How many days does your period last?")
                     .font(.headline)
-                Text("\(Int(periodLength)) ngày")
+                Text("\(Int(periodLength)) days")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.cycleLavender)
                 Slider(value: $periodLength, in: 2...10, step: 1)
@@ -128,7 +128,7 @@ struct OnboardingView: View {
             Button {
                 step = 3
             } label: {
-                Text("Tiếp tục")
+                Text("Continue")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .frame(height: 54)
@@ -152,10 +152,10 @@ struct OnboardingView: View {
                     .foregroundColor(.cycleRose)
             }
 
-            Text("Bạn đã sẵn sàng!")
+            Text("You're All Set!")
                 .font(.system(size: 28, weight: .bold))
 
-            Text("CycleCare cam kết bảo mật tuyệt đối dữ liệu y tế nhạy cảm. Không chia sẻ thông tin cho bên thứ ba.")
+            Text("CycleCare is strictly committed to protecting your private health data. 100% on-device encryption and no third-party data tracking.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -168,7 +168,7 @@ struct OnboardingView: View {
             } label: {
                 HStack {
                     Image(systemName: "person.crop.circle")
-                    Text("Dùng ngay không cần đăng ký (Ẩn danh)")
+                    Text("Start Instantly (100% Anonymous)")
                 }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
@@ -181,7 +181,7 @@ struct OnboardingView: View {
             Button {
                 completeOnboarding(isAnonymous: false)
             } label: {
-                Text("Đăng ký tài khoản")
+                Text("Register Account")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .frame(height: 54)
@@ -199,7 +199,7 @@ struct OnboardingView: View {
         let uid = repository.getOrCreateUserId()
         let profile = UserProfile(
             id: uid,
-            displayName: isAnonymous ? "Người dùng ẩn danh" : "Bạn",
+            displayName: isAnonymous ? "Anonymous User" : "You",
             goal: selectedGoal,
             avgCycleLength: Int(cycleLength),
             avgPeriodLength: Int(periodLength),

@@ -15,11 +15,11 @@ struct InsightsView: View {
     @State private var showPaywall = false
 
     private let categories = [
-        ("all", "Tất cả"),
-        ("cycle", "Chu kỳ"),
-        ("fertility", "Thụ thai"),
-        ("wellness", "Sức khỏe"),
-        ("pregnancy", "Thai kỳ")
+        ("all", "All"),
+        ("cycle", "Cycle"),
+        ("fertility", "Fertility"),
+        ("wellness", "Wellness"),
+        ("pregnancy", "Pregnancy")
     ]
 
     private var chartData: [CycleDataPoint] {
@@ -34,12 +34,12 @@ struct InsightsView: View {
         }
         // Simulated default historical trends for a great visual experience
         return [
-            CycleDataPoint(month: "T4", days: 28),
-            CycleDataPoint(month: "T5", days: 29),
-            CycleDataPoint(month: "T6", days: 27),
-            CycleDataPoint(month: "T7", days: 28),
-            CycleDataPoint(month: "T8", days: 30),
-            CycleDataPoint(month: "T9", days: 28)
+            CycleDataPoint(month: "May", days: 28),
+            CycleDataPoint(month: "Jun", days: 29),
+            CycleDataPoint(month: "Jul", days: 27),
+            CycleDataPoint(month: "Aug", days: 28),
+            CycleDataPoint(month: "Sep", days: 30),
+            CycleDataPoint(month: "Oct", days: 28)
         ]
     }
 
@@ -62,9 +62,9 @@ struct InsightsView: View {
                     VStack(alignment: .leading, spacing: 14) {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Xu hướng độ dài chu kỳ")
+                                Text("Cycle Length Trends")
                                     .font(.headline)
-                                Text("Trung bình: \(Int(averageCycleLength)) ngày")
+                                Text("Average: \(Int(averageCycleLength)) days")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
@@ -78,8 +78,8 @@ struct InsightsView: View {
                         Chart {
                             ForEach(chartData) { point in
                                 BarMark(
-                                    x: .value("Tháng", point.month),
-                                    y: .value("Số ngày", point.days)
+                                    x: .value("Month", point.month),
+                                    y: .value("Days", point.days)
                                 )
                                 .foregroundStyle(
                                     LinearGradient(
@@ -91,11 +91,11 @@ struct InsightsView: View {
                                 .cornerRadius(6)
                             }
 
-                            RuleMark(y: .value("Trung bình", averageCycleLength))
+                            RuleMark(y: .value("Average", averageCycleLength))
                                 .foregroundStyle(Color.cycleLavender)
                                 .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                                 .annotation(position: .top, alignment: .trailing) {
-                                    Text("TB: \(Int(averageCycleLength)) ngày")
+                                    Text("Avg: \(Int(averageCycleLength))d")
                                         .font(.caption2)
                                         .foregroundColor(.cycleLavender)
                                         .padding(.horizontal, 4)
@@ -107,10 +107,10 @@ struct InsightsView: View {
 
                         HStack {
                             Circle().fill(Color.cycleRose).frame(width: 8, height: 8)
-                            Text("Chu kỳ thực tế").font(.caption2).foregroundColor(.secondary)
+                            Text("Actual cycle").font(.caption2).foregroundColor(.secondary)
                             Spacer()
                             Circle().fill(Color.cycleLavender).frame(width: 8, height: 8)
-                            Text("Mức trung bình cá nhân").font(.caption2).foregroundColor(.secondary)
+                            Text("Personal average").font(.caption2).foregroundColor(.secondary)
                         }
                     }
                     .padding(20)
@@ -120,10 +120,10 @@ struct InsightsView: View {
                     // Educational Articles Section Header & Categories Filter
                     VStack(alignment: .leading, spacing: 14) {
                         HStack {
-                            Text("Góc Chuyên Gia & Bài Viết")
+                            Text("Expert Insights & Articles")
                                 .font(.headline)
                             Spacer()
-                            Text("\(filteredArticles.count) bài")
+                            Text("\(filteredArticles.count) articles")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -165,7 +165,7 @@ struct InsightsView: View {
                 .padding()
             }
             .background(Color.cycleBackground.ignoresSafeArea())
-            .navigationTitle("Khám phá & Thống kê")
+            .navigationTitle("Insights & Statistics")
             .sheet(item: $selectedArticle) { article in
                 ArticleDetailSheet(article: article)
             }
@@ -253,11 +253,11 @@ struct ArticleCard: View {
 
     private func categoryLabel(for category: String) -> String {
         switch category {
-        case "cycle": return "Chu kỳ"
-        case "fertility": return "Thụ thai"
-        case "wellness": return "Sức khỏe"
-        case "pregnancy": return "Thai kỳ"
-        default: return "Cẩm nang"
+        case "cycle": return "Cycle"
+        case "fertility": return "Fertility"
+        case "wellness": return "Wellness"
+        case "pregnancy": return "Pregnancy"
+        default: return "Guide"
         }
     }
 }
@@ -280,7 +280,7 @@ struct ArticleDetailSheet: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                         Spacer()
-                        Label("3 phút đọc", systemImage: "clock")
+                        Label("3 min read", systemImage: "clock")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -296,11 +296,11 @@ struct ArticleDetailSheet: View {
                         HStack {
                             Image(systemName: "shield.lefthalf.filled")
                                 .foregroundColor(.cycleRose)
-                            Text("Tham vấn y khoa")
+                            Text("Medical Disclaimer")
                                 .font(.caption)
                                 .fontWeight(.bold)
                         }
-                        Text("Nội dung chỉ mang tính giáo dục, không thể thay thế chẩn đoán hoặc điều trị y tế chuyên sâu từ bác sĩ phụ khoa.")
+                        Text("This content is intended for educational purposes only and does not replace personalized medical advice from a gynecologist.")
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -313,7 +313,7 @@ struct ArticleDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Đóng") {
+                    Button("Close") {
                         dismiss()
                     }
                 }
@@ -352,7 +352,7 @@ struct PremiumPaywallSheet: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
 
-                            Text("Chăm sóc sức khỏe phụ nữ toàn diện & khoa học")
+                            Text("Comprehensive & scientific women's health companion")
                                 .font(.subheadline)
                                 .foregroundColor(.white.opacity(0.9))
                                 .multilineTextAlignment(.center)
@@ -362,10 +362,10 @@ struct PremiumPaywallSheet: View {
 
                     // Feature List
                     VStack(alignment: .leading, spacing: 14) {
-                        FeatureRow(icon: "sparkles", text: "Dự đoán rụng trứng & chu kỳ bằng AI độ chính xác 95%")
-                        FeatureRow(icon: "doc.text.fill", text: "Báo cáo sức khỏe PDF gửi bác sĩ phụ khoa")
-                        FeatureRow(icon: "book.pages.fill", text: "Kho hơn 100+ bài viết độc quyền từ chuyên gia sản phụ khoa")
-                        FeatureRow(icon: "person.2.fill", text: "Chế độ đồng bộ không giới hạn cho bạn đời (Partner Mode)")
+                        FeatureRow(icon: "sparkles", text: "AI-powered cycle & ovulation prediction with 95% accuracy")
+                        FeatureRow(icon: "doc.text.fill", text: "Exportable monthly PDF health reports for your doctor")
+                        FeatureRow(icon: "book.pages.fill", text: "100+ exclusive articles by OB-GYN & fertility experts")
+                        FeatureRow(icon: "person.2.fill", text: "Unlimited partner synchronization (Partner Mode)")
                     }
                     .padding()
                     .background(Color.cycleSurface)
@@ -373,11 +373,11 @@ struct PremiumPaywallSheet: View {
 
                     // Price Trial Card
                     VStack(spacing: 6) {
-                        Text("Dùng thử 7 ngày MIỄN PHÍ")
+                        Text("Start 7-Day FREE Trial")
                             .font(.headline)
                             .foregroundColor(.primary)
 
-                        Text("Sau đó 99.000 đ/tháng • Hủy bất cứ lúc nào trong App Store")
+                        Text("Then $4.99/month • Cancel anytime in App Store")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -398,7 +398,7 @@ struct PremiumPaywallSheet: View {
                             ProgressView()
                                 .tint(.white)
                         } else {
-                            Text(purchased ? "Đã nâng cấp thành công!" : "Bắt đầu dùng thử 7 ngày")
+                            Text(purchased ? "Upgraded Successfully!" : "Start 7-Day Free Trial")
                                 .font(.headline)
                                 .foregroundColor(.white)
                         }
@@ -411,11 +411,11 @@ struct PremiumPaywallSheet: View {
 
                     // Footer links
                     HStack(spacing: 20) {
-                        Button("Khôi phục gói") {}
+                        Button("Restore Purchases") {}
                         Text("•").foregroundColor(.secondary)
-                        Button("Điều khoản") {}
+                        Button("Terms of Service") {}
                         Text("•").foregroundColor(.secondary)
-                        Button("Chính sách bảo mật") {}
+                        Button("Privacy Policy") {}
                     }
                     .font(.caption2)
                     .foregroundColor(.secondary)
@@ -425,7 +425,7 @@ struct PremiumPaywallSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Đóng") {
+                    Button("Close") {
                         dismiss()
                     }
                 }

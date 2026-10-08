@@ -39,65 +39,65 @@ struct FetalMilestone {
         case 4...6:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Hạt mè (Hạt vừng)",
+                fruitComparison: "Sesame Seed",
                 lengthCm: 0.2,
                 weightGrams: 0.5,
-                description: "Ống thần kinh của bé đang hình thành và tim bắt đầu có những nhịp đập đầu tiên.",
-                advice: "Uống bổ sung Acid Folic (400-600 mcg/ngày), nghỉ ngơi và uống đủ nước."
+                description: "The neural tube is developing and the heart is beginning its very first beats.",
+                advice: "Take 400-600 mcg of Folic Acid daily, stay well-hydrated, and prioritize rest."
             )
         case 7...10:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Quả mâm xôi",
+                fruitComparison: "Raspberry",
                 lengthCm: 2.3,
                 weightGrams: 2.0,
-                description: "Các ngón tay, ngón chân nhỏ xíu đang tách rời và chóp mũi dần rõ nét.",
-                advice: "Chia nhỏ bữa ăn nếu bị ốm nghén, uống trà gừng ấm nhẹ."
+                description: "Tiny webbed fingers and toes are separating and facial features are starting to form.",
+                advice: "Eat smaller, frequent meals to ease morning sickness and sip warm ginger tea."
             )
         case 11...14:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Quả chanh vàng",
+                fruitComparison: "Lemon",
                 lengthCm: 7.4,
                 weightGrams: 23.0,
-                description: "Hoàn tất tam cá nguyệt 1. Bé bắt đầu cử động nhẹ nhàng và có dấu vân tay riêng.",
-                advice: "Thời điểm thích hợp thực hiện siêu âm đo độ mờ da gáy."
+                description: "Completing first trimester! Baby is moving gently and unique fingerprints are forming.",
+                advice: "Ideal window for your first trimester ultrasound scan and screening tests."
             )
         case 15...19:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Quả bơ sáp",
+                fruitComparison: "Avocado",
                 lengthCm: 12.0,
                 weightGrams: 100.0,
-                description: "Bé đã có thể nghe được âm thanh nhịp tim và giọng nói của mẹ.",
-                advice: "Nói chuyện nhẹ nhàng với bé mỗi ngày, tập ngủ nghiêng bên trái."
+                description: "Baby can now hear your heartbeat and the soothing sound of your voice.",
+                advice: "Talk and sing gently to baby, and practice sleeping on your left side."
             )
         case 20...24:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Bắp ngô ngọt",
+                fruitComparison: "Ear of Corn",
                 lengthCm: 28.0,
                 weightGrams: 450.0,
-                description: "Mẹ cảm nhận rõ cú đạp đầu tiên. Lông mày và mí mắt bé đã hoàn chỉnh.",
-                advice: "Bổ sung sắt, canxi và xét nghiệm tiểu đường thai kỳ."
+                description: "You may feel distinct little kicks! Eyebrows and delicate eyelids are now formed.",
+                advice: "Ensure adequate iron and calcium intake, and schedule gestational diabetes screening."
             )
         case 25...29:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Quả cà tím",
+                fruitComparison: "Eggplant",
                 lengthCm: 36.0,
                 weightGrams: 1000.0,
-                description: "Bước vào tam cá nguyệt 3. Não bộ bé phát triển vượt bậc và bé biết chớp mắt.",
-                advice: "Tập đếm cử động thai sau bữa ăn, chuẩn bị giỏ đồ đi sinh."
+                description: "Entering the 3rd trimester! Rapid brain growth and baby is now practicing blinking.",
+                advice: "Track baby's kick counts daily after meals and prepare your hospital go-bag."
             )
         default:
             return FetalMilestone(
                 week: clamped,
-                fruitComparison: "Quả dưa hấu",
+                fruitComparison: "Watermelon",
                 lengthCm: 50.0,
                 weightGrams: 3200.0,
-                description: "Bé đã sẵn sàng chào đời! Lớp mỡ dưới da đầy đặn và đã quay đầu thuận.",
-                advice: "Theo dõi các cơn gò chuyển dạ hoặc dấu hiệu rỉ ối để vào viện kịp thời."
+                description: "Baby is fully grown and ready to meet you! Soft chubby skin and settled in head-down position.",
+                advice: "Monitor labor contractions and fluid signs to arrive at the maternity ward promptly."
             )
         }
     }

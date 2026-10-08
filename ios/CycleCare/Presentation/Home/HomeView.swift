@@ -45,7 +45,7 @@ struct HomeView: View {
             VStack {
                 HStack {
                     Spacer()
-                    Button("Quay lại chu kỳ") {
+                    Button("Back to Cycle") {
                         isPregnancyModeActive = false
                     }
                     .font(.caption)
@@ -63,7 +63,7 @@ struct HomeView: View {
                     // Header
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Xin chào, \(profile.displayName)")
+                            Text("Hello, \(profile.displayName)")
                                 .font(.title2)
                                 .fontWeight(.bold)
                             Text(Date().formatted(date: .long, time: .omitted))
@@ -77,7 +77,7 @@ struct HomeView: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "figure.and.child.holdinghands")
-                                Text("Thai kỳ")
+                                Text("Pregnancy")
                                     .font(.caption)
                                     .fontWeight(.bold)
                             }
@@ -111,15 +111,15 @@ struct HomeView: View {
 
                         // Center content
                         VStack(spacing: 6) {
-                            Text("Ngày thứ \(currentCycleDay)")
+                            Text("Day \(currentCycleDay)")
                                 .font(.system(size: 34, weight: .bold))
                                 .foregroundColor(isPeriod ? .periodRed : (isFertileWindow ? .fertilePurple : .cycleRose))
 
-                            Text("của chu kỳ")
+                            Text("of cycle")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
 
-                            Text(daysUntilNextPeriod > 0 ? "Còn \(daysUntilNextPeriod) ngày đến kỳ kinh" : "Kỳ kinh bắt đầu hôm nay")
+                            Text(daysUntilNextPeriod > 0 ? "\(daysUntilNextPeriod) days until period" : "Period starts today")
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .padding(.horizontal, 10)
@@ -127,7 +127,7 @@ struct HomeView: View {
                                 .background(Color.cycleSurfaceVariant)
                                 .cornerRadius(10)
 
-                            Text(isFertileWindow ? "Khả năng thụ thai: Cao" : "Khả năng thụ thai: Thấp")
+                            Text(isFertileWindow ? "Chance of getting pregnant: High" : "Chance of getting pregnant: Low")
                                 .font(.caption2)
                                 .foregroundColor(isFertileWindow ? .fertilePurple : .secondary)
                         }
@@ -147,7 +147,7 @@ struct HomeView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "drop.fill")
-                                Text("Ghi nhận kỳ kinh")
+                                Text("Log Period")
                             }
                             .font(.headline)
                             .frame(maxWidth: .infinity)
@@ -162,7 +162,7 @@ struct HomeView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "plus")
-                                Text("Ghi nhật ký")
+                                Text("Log Daily")
                             }
                             .font(.headline)
                             .frame(maxWidth: .infinity)
@@ -178,15 +178,15 @@ struct HomeView: View {
                         HStack {
                             Image(systemName: "sparkles")
                                 .foregroundColor(.cycleRose)
-                            Text(isPeriod ? "Pha Hành Kinh: Nghỉ ngơi nhẹ nhàng" : (isFertileWindow ? "Pha Nang Trứng: Năng lượng đạt đỉnh" : "Pha Hoàng Thể: Lắng nghe cảm xúc"))
+                            Text(isPeriod ? "Menstrual Phase: Rest & Restore" : (isFertileWindow ? "Follicular Phase: Energy at Peak" : "Luteal Phase: Listen to Your Body"))
                                 .font(.headline)
                         }
 
                         Text(isPeriod ?
-                             "Nồng độ estrogen và progesterone đang ở mức thấp. Hãy giữ ấm vùng bụng, uống trà gừng và ngủ đủ giấc." :
+                             "Estrogen and progesterone are at their lowest levels. Stay warm, stay hydrated with herbal tea, and get plenty of rest." :
                              (isFertileWindow ?
-                              "Cửa sổ thụ thai đang mở. Nồng độ estrogen tăng cao giúp bạn cảm thấy tự tin, yêu đời và làn da tươi tắn." :
-                              "Progesterone tăng cao có thể gây cảm giác mệt mỏi nhẹ. Hãy ưu tiên thực phẩm giàu chất xơ và hạn chế đồ ngọt."))
+                              "The fertile window is open. Rising estrogen enhances energy, mood, confidence, and radiant skin." :
+                              "Rising progesterone may bring subtle fatigue. Focus on fiber-rich whole foods and light calming exercises."))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     }

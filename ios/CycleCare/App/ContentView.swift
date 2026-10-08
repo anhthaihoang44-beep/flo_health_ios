@@ -48,11 +48,11 @@ struct ContentView: View {
                 }
 
                 VStack(spacing: 8) {
-                    Text("CycleCare đang khóa")
+                    Text("CycleCare is Locked")
                         .font(.title2)
                         .fontWeight(.bold)
 
-                    Text("Xác thực Face ID hoặc Touch ID để mở khóa dữ liệu sức khỏe của bạn")
+                    Text("Authenticate with Face ID or Touch ID to unlock your private health data")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -60,7 +60,7 @@ struct ContentView: View {
                 }
 
                 if authenticationFailed {
-                    Text("Xác thực không thành công. Vui lòng thử lại.")
+                    Text("Authentication failed. Please try again.")
                         .font(.caption)
                         .foregroundColor(.red)
                 }
@@ -72,7 +72,7 @@ struct ContentView: View {
                 } label: {
                     HStack {
                         Image(systemName: "lock.open.fill")
-                        Text("Mở khóa ngay")
+                        Text("Unlock Now")
                     }
                     .font(.headline)
                     .foregroundColor(.white)
@@ -97,7 +97,7 @@ struct ContentView: View {
     }
 
     private func authenticateWithBiometrics() {
-        biometric.authenticateUser(reason: "Mở khóa ứng dụng CycleCare") { success in
+        biometric.authenticateUser(reason: "Unlock CycleCare app") { success in
             if success {
                 isUnlocked = true
                 authenticationFailed = false
