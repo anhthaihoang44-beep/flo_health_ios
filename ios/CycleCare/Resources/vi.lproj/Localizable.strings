@@ -1,0 +1,35 @@
+/* Vietnamese Localization for CycleCare */
+
+"app_name" = "CycleCare";
+"welcome_title" = "Chào mừng đến với CycleCare";
+"welcome_subtitle" = "Chăm sóc sức khỏe phụ nữ thông minh, riêng tư và khoa học.";
+"goal_track" = "Theo dõi chu kỳ kinh nguyệt";
+"goal_conceive" = "Kế hoạch mang thai & Thụ thai";
+"goal_pregnant" = "Theo dõi thai kỳ";
+"goal_perimenopause" = "Tiền mãn kinh & Sức khỏe nội tiết";
+
+"tab_home" = "Trang chủ";
+"tab_calendar" = "Lịch";
+"tab_log" = "Nhật ký";
+"tab_insights" = "Khám phá";
+"tab_settings" = "Cài đặt";
+
+"cycle_day" = "Ngày thứ %d";
+"of_cycle" = "của chu kỳ";
+"days_left_period" = "Còn %d ngày đến kỳ kinh";
+"fertile_window_high" = "Khả năng thụ thai: Cao";
+"fertile_window_low" = "Khả năng thụ thai: Thấp";
+
+"log_period_start" = "Ghi nhận kỳ kinh";
+"log_daily" = "Ghi nhật ký";
+
+"follicular_phase" = "Pha Nang Trứng";
+"luteal_phase" = "Pha Hoàng Thể";
+"menstrual_phase" = "Pha Hành Kinh";
+"ovulation_phase" = "Pha Rụng Trứng";
+
+"save" = "Lưu";
+"cancel" = "Hủy";
+"delete" = "Xóa";
+"confirm" = "Xác nhận";
+"close" = "Đóng";

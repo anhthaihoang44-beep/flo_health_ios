@@ -1,0 +1,35 @@
+/* English Localization for CycleCare */
+
+"app_name" = "CycleCare";
+"welcome_title" = "Welcome to CycleCare";
+"welcome_subtitle" = "Smart, private, and evidence-based women's health companion.";
+"goal_track" = "Track Menstrual Cycle";
+"goal_conceive" = "Get Pregnant & Fertility";
+"goal_pregnant" = "Track Pregnancy";
+"goal_perimenopause" = "Perimenopause & Hormonal Health";
+
+"tab_home" = "Home";
+"tab_calendar" = "Calendar";
+"tab_log" = "Daily Log";
+"tab_insights" = "Insights";
+"tab_settings" = "Settings";
+
+"cycle_day" = "Day %d";
+"of_cycle" = "of cycle";
+"days_left_period" = "%d days until period";
+"fertile_window_high" = "Chance of getting pregnant: High";
+"fertile_window_low" = "Chance of getting pregnant: Low";
+
+"log_period_start" = "Log Period";
+"log_daily" = "Log Symptoms";
+
+"follicular_phase" = "Follicular Phase";
+"luteal_phase" = "Luteal Phase";
+"menstrual_phase" = "Menstrual Phase";
+"ovulation_phase" = "Ovulation Phase";
+
+"save" = "Save";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"confirm" = "Confirm";
+"close" = "Close";
