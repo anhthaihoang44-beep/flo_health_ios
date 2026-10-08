@@ -278,12 +278,12 @@ struct DailyLogView: View {
             flow = log.flow
             selectedMood = log.mood
             selectedSymptoms = Set(log.symptoms)
-            crampsLevel = Double(log.crampsIntensity ?? 0)
+            crampsLevel = Double(log.crampsLevel ?? 0)
             libidoLevel = Double(log.libido ?? 0)
             sleepHours = log.sleepHours ?? 7.5
             activity = log.activity
             discharge = log.discharge
-            notes = log.notes ?? ""
+            notes = log.note ?? ""
         } else {
             flow = .none
             selectedMood = nil
@@ -301,16 +301,16 @@ struct DailyLogView: View {
         let userId = repository.currentProfile?.id ?? repository.getOrCreateUserId()
         let log = DailyLog(
             userId: userId,
-            date: selectedDate,
+            logDate: selectedDate,
             flow: flow,
-            crampsIntensity: Int(crampsLevel),
             mood: selectedMood,
-            symptoms: Array(selectedSymptoms),
-            libido: Int(libidoLevel),
             discharge: discharge,
-            activity: activity,
+            crampsLevel: Int(crampsLevel),
+            libido: Int(libidoLevel),
             sleepHours: sleepHours,
-            notes: notes.isEmpty ? nil : notes
+            activity: activity,
+            symptoms: Array(selectedSymptoms),
+            note: notes.isEmpty ? nil : notes
         )
         repository.saveDailyLog(log)
 

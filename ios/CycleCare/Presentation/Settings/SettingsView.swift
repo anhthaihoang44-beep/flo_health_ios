@@ -42,7 +42,7 @@ struct SettingsView: View {
                                 .font(.headline)
 
                             HStack(spacing: 6) {
-                                Text(profile.goal.title)
+                                Text(profile.goal.titleVi)
                                     .font(.caption2)
                                     .padding(.horizontal, 8)
                                     .padding(.vertical, 2)
