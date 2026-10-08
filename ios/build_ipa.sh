@@ -10,6 +10,7 @@ fi
 echo "=== [2/4] Generating Xcode Project ==="
 cd ios
 xcodegen generate
+sed -i '' 's/objectVersion = [0-9]*/objectVersion = 56/g' CycleCare.xcodeproj/project.pbxproj
 
 echo "=== [3/4] Building CycleCare (ARM64 iOS Device Target) ==="
 xcodebuild \
