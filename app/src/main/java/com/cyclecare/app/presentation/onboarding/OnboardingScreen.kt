@@ -116,7 +116,7 @@ fun OnboardingScreen(
                             val userId = repository.getActiveUserId()
                             val profile = UserProfile(
                                 id = userId,
-                                displayName = if (isAnon) "Người dùng ẩn danh" else "Bạn",
+                                displayName = if (isAnon) "Anonymous User" else "You",
                                 goal = selectedGoal,
                                 avgCycleLength = cycleLength.toInt(),
                                 avgPeriodLength = periodLength.toInt(),
@@ -124,7 +124,7 @@ fun OnboardingScreen(
                                 lastPeriodStartDate = lastPeriodStartDate
                             )
                             repository.saveProfile(profile)
-                            // Lưu chu kỳ đầu tiên
+                            // Save initial cycle
                             repository.saveCycle(
                                 Cycle(
                                     id = "",
@@ -248,13 +248,13 @@ private fun CycleParametersStep(
         Column {
             Spacer(modifier = Modifier.height(32.dp))
             Text(
-                text = "Thông số chu kỳ của bạn",
+                text = "Your Cycle Parameters",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Giúp thuật toán ước tính chính xác ngày rụng trứng và ngày kinh kế tiếp.",
+                text = "Helps our algorithm accurately predict your ovulation and next period.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -274,7 +274,7 @@ private fun CycleParametersStep(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "${cycleLength.toInt()} ngày",
+                        text = "${cycleLength.toInt()} days",
                         style = MaterialTheme.typography.displayLarge.copy(fontSize = 32.sp),
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -307,7 +307,7 @@ private fun CycleParametersStep(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "${periodLength.toInt()} ngày",
+                        text = "${periodLength.toInt()} days",
                         style = MaterialTheme.typography.displayLarge.copy(fontSize = 32.sp),
                         color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.Bold
@@ -370,7 +370,7 @@ private fun FinalStep(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Bạn đã sẵn sàng!",
+            text = "You're All Set!",
             style = MaterialTheme.typography.displayLarge.copy(fontSize = 28.sp),
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center
@@ -379,7 +379,7 @@ private fun FinalStep(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "CycleCare bảo vệ nghiêm ngặt quyền riêng tư của bạn. Không chia sẻ dữ liệu y tế cho bên thứ ba.",
+            text = "CycleCare strictly protects your privacy. Your sensitive health data is never shared with third parties.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,

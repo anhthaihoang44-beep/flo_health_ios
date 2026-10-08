@@ -176,7 +176,7 @@ class CycleCareRepository(
     // --------------------------------------------------------------------------
     // ARTICLES & SEEDING
     // --------------------------------------------------------------------------
-    fun getArticlesFlow(locale: String = "vi"): Flow<List<Article>> {
+    fun getArticlesFlow(locale: String = "en"): Flow<List<Article>> {
         return database.articleDao().getArticlesByLocaleFlow(locale).map { list ->
             list.map {
                 Article(
@@ -192,32 +192,40 @@ class CycleCareRepository(
     }
 
     suspend fun seedSampleArticlesIfEmpty() {
-        val existing = database.articleDao().getArticlesByLocaleFlow("vi").first()
+        val existing = database.articleDao().getArticlesByLocaleFlow("en").first()
         if (existing.isEmpty()) {
             val samples = listOf(
                 ArticleEntity(
                     id = "art-1",
-                    title = "Hiểu Rõ 4 Pha Của Chu Kỳ Kinh Nguyệt",
-                    body = "Chu kỳ kinh nguyệt trung bình kéo dài 28 ngày và được chia thành 4 pha chính: Pha hành kinh, Pha nang trứng, Pha rụng trứng và Pha hoàng thể. Việc theo dõi từng pha giúp bạn tối ưu hóa chế độ dinh dưỡng và kiểm soát năng lượng.",
+                    title = "Understanding the 4 Phases of Your Menstrual Cycle",
+                    body = "The average menstrual cycle lasts 28 days and is divided into 4 main phases: Menstrual, Follicular, Ovulation, and Luteal. Tracking each phase helps you optimize nutrition, workouts, and energy levels throughout the month.",
                     category = "cycle",
-                    locale = "vi",
+                    locale = "en",
                     isPremium = false
                 ),
                 ArticleEntity(
                     id = "art-2",
-                    title = "Cửa Sổ Thụ Thai & Cách Nhận Biết Thời Điểm Vàng",
-                    body = "Cửa sổ thụ thai bao gồm 5 ngày trước khi rụng trứng và ngày rụng trứng. Dấu hiệu nhận biết: dịch âm đạo dạng lòng trắng trứng sống và nhiệt độ cơ thể cơ bản tăng nhẹ.",
+                    title = "Fertility Window & Recognizing Peak Days",
+                    body = "The fertile window spans the 5 days before ovulation plus ovulation day itself. Key physical indicators include egg-white cervical mucus and a subtle rise in basal body temperature.",
                     category = "fertility",
-                    locale = "vi",
+                    locale = "en",
                     isPremium = false
                 ),
                 ArticleEntity(
                     id = "art-3",
-                    title = "Giảm Đau Bụng Kinh Tự Nhiên Không Cần Thuốc",
-                    body = "Chườm ấm vùng bụng dưới bằng túi chườm (40°C), uống trà gừng ấm, tập yoga nhẹ nhàng và bổ sung magie trong chế độ ăn hàng ngày.",
+                    title = "Natural Ways to Ease Menstrual Cramps",
+                    body = "Apply a warm heating pad to your lower abdomen, drink chamomile or ginger tea, practice gentle restorative yoga, and maintain adequate magnesium intake through your diet.",
                     category = "wellness",
-                    locale = "vi",
+                    locale = "en",
                     isPremium = false
+                ),
+                ArticleEntity(
+                    id = "art-4",
+                    title = "Optimizing Sleep & Hormonal Balance",
+                    body = "Progesterone peaks during the luteal phase, which can raise resting body temperature and cause sleep disruption. Keeping your bedroom cool and sticking to a consistent sleep schedule can greatly improve REM quality.",
+                    category = "wellness",
+                    locale = "en",
+                    isPremium = true
                 )
             )
             database.articleDao().insertArticles(samples)

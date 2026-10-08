@@ -52,7 +52,7 @@ fun PregnancyScreen(
     val profile by repository.getProfileFlow().collectAsState(initial = null)
     val predictorEngine = remember { CyclePredictorEngine() }
 
-    // Dùng ngày kinh gần nhất từ profile làm LMP hoặc mặc định 12 tuần trước
+    // Use last period date from profile as LMP or default to 12 weeks ago
     val lmpDate = profile?.lastPeriodStartDate ?: LocalDate.now().minusWeeks(12)
     val pregnancyInfo = remember(lmpDate) {
         predictorEngine.calculatePregnancy(lmpDate = lmpDate, currentDate = LocalDate.now())
@@ -71,12 +71,12 @@ fun PregnancyScreen(
             .padding(20.dp)
     ) {
         Text(
-            text = "Nhật Ký Thai Kỳ",
+            text = "Pregnancy Journal",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Đồng hành từng khoảnh khắc diệu kỳ cùng thiên thần nhỏ",
+            text = "Follow your baby's development week by week",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -111,7 +111,7 @@ fun PregnancyScreen(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "Tuần ${pregnancyInfo.gestationalWeeks} + ${pregnancyInfo.gestationalDays} ngày",
+                    text = "Week ${pregnancyInfo.gestationalWeeks} + ${pregnancyInfo.gestationalDays} days",
                     style = MaterialTheme.typography.displayLarge.copy(fontSize = 32.sp),
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -120,7 +120,7 @@ fun PregnancyScreen(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 Text(
-                    text = "Còn ${pregnancyInfo.daysRemaining} ngày đến ngày dự sinh (${pregnancyInfo.dueDate})",
+                    text = "${pregnancyInfo.daysRemaining} days left until due date (${pregnancyInfo.dueDate})",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -149,7 +149,7 @@ fun PregnancyScreen(
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
                 Text(
-                    text = "Kích thước của bé tuần này",
+                    text = "Baby's Size This Week",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -179,13 +179,13 @@ fun PregnancyScreen(
 
                     Column {
                         Text(
-                            text = "Tương đương: ${milestone.fruitComparison}",
+                            text = "Size of a ${milestone.fruitComparison}",
                             style = MaterialTheme.typography.titleLarge.copy(fontSize = 18.sp),
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.secondary
                         )
                         Text(
-                            text = "Chiều dài ~ ${milestone.lengthCm} cm | Cân nặng ~ ${milestone.weightGrams} g",
+                            text = "Length ~ ${milestone.lengthCm} cm | Weight ~ ${milestone.weightGrams} g",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -220,7 +220,7 @@ fun PregnancyScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Lời khuyên cho mẹ tuần này",
+                        text = "Tips for Mom This Week",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )

@@ -50,6 +50,8 @@ import com.cyclecare.app.data.repository.CycleCareRepository
 import com.cyclecare.app.domain.model.DailyLog
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -67,24 +69,24 @@ fun DailyLogScreen(
 
     val existingLog by repository.getDailyLogFlow(activeUserId, selectedDate).collectAsState(initial = null)
 
-    var mood by remember { mutableStateOf("Bình thường") }
-    var discharge by remember { mutableStateOf("Khô ráo") }
+    var mood by remember { mutableStateOf("Calm") }
+    var discharge by remember { mutableStateOf("Dry") }
     var crampsLevel by remember { mutableFloatStateOf(1f) }
     var libido by remember { mutableFloatStateOf(2f) }
     var sleepHours by remember { mutableFloatStateOf(7.5f) }
-    var activity by remember { mutableStateOf("Đi bộ nhẹ") }
+    var activity by remember { mutableStateOf("Light Walk") }
     var symptoms by remember { mutableStateOf(setOf<String>()) }
     var note by remember { mutableStateOf("") }
     var isSaved by remember { mutableStateOf(false) }
 
     LaunchedEffect(existingLog) {
         existingLog?.let {
-            mood = it.mood ?: "Bình thường"
-            discharge = it.discharge ?: "Khô ráo"
+            mood = it.mood ?: "Calm"
+            discharge = it.discharge ?: "Dry"
             crampsLevel = (it.crampsLevel ?: 1).toFloat()
             libido = (it.libido ?: 2).toFloat()
             sleepHours = (it.sleepHours ?: 7.5).toFloat()
-            activity = it.activity ?: "Đi bộ nhẹ"
+            activity = it.activity ?: "Light Walk"
             symptoms = it.symptoms.toSet()
             note = it.note ?: ""
         }
@@ -102,7 +104,7 @@ fun DailyLogScreen(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Hôm nay, ngày ${selectedDate.dayOfMonth} tháng ${selectedDate.monthValue}",
+            text = "Today, ${selectedDate.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)} ${selectedDate.dayOfMonth}",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -118,7 +120,7 @@ fun DailyLogScreen(
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(text = stringResource(R.string.section_mood), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(12.dp))
-                val moods = listOf("Vui vẻ", "Nhạy cảm", "Lo lắng", "Mệt mỏi", "Bình thường", "Cáu kỉnh")
+                val moods = listOf("Happy", "Sensitive", "Anxious", "Fatigued", "Calm", "Irritable")
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -141,9 +143,9 @@ fun DailyLogScreen(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "Dịch âm đạo & Dấu hiệu", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(text = "Cervical Mucus & Discharge", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(12.dp))
-                val discharges = listOf("Khô ráo", "Dính", "Dạng kem", "Lòng trắng trứng", "Ra máu nhẹ")
+                val discharges = listOf("Dry", "Sticky", "Creamy", "Eggwhite", "Spotting")
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -167,7 +169,7 @@ fun DailyLogScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Đau bụng kinh (Mức ${crampsLevel.toInt()}/5)",
+                    text = "Cramps Intensity (Level ${crampsLevel.toInt()}/5)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -182,7 +184,7 @@ fun DailyLogScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Ham muốn tình dục (Mức ${libido.toInt()}/5)",
+                    text = "Sex Drive / Libido (Level ${libido.toInt()}/5)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -197,7 +199,7 @@ fun DailyLogScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Thời gian ngủ: ${String.format("%.1f", sleepHours)} giờ",
+                    text = "Sleep Duration: ${String.format("%.1f", sleepHours)} hours",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -220,9 +222,9 @@ fun DailyLogScreen(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = "Hoạt động thể chất", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(text = "Physical Activity", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(12.dp))
-                val activities = listOf("Nghỉ ngơi", "Yoga", "Đi bộ nhẹ", "Chạy bộ", "Gym / Thể lực", "Bơi lội")
+                val activities = listOf("Resting", "Yoga", "Light Walk", "Running", "Gym / Workout", "Swimming")
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -247,7 +249,7 @@ fun DailyLogScreen(
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(text = stringResource(R.string.section_symptoms), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(12.dp))
-                val symptomOptions = listOf("Đau đầu", "Đầy hơi", "Căng tức ngực", "Nổi mụn", "Đau thắt lưng", "Thèm ngọt", "Mất ngủ", "Bốc hỏa")
+                val symptomOptions = listOf("Headache", "Bloating", "Tender Breasts", "Acne", "Lower Back Pain", "Cravings", "Insomnia", "Hot Flashes")
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -277,7 +279,7 @@ fun DailyLogScreen(
                     value = note,
                     onValueChange = { note = it },
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text("Ghi lại cảm xúc hoặc sự kiện hôm nay…") },
+                    placeholder = { Text("Record your feelings, events or symptoms today…") },
                     shape = RoundedCornerShape(12.dp),
                     maxLines = 4
                 )
@@ -313,7 +315,7 @@ fun DailyLogScreen(
             shape = RoundedCornerShape(27.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
-            Text(if (isSaved) "Đã lưu thành công!" else stringResource(R.string.btn_save_log), style = MaterialTheme.typography.labelLarge)
+            Text(if (isSaved) "Saved successfully!" else stringResource(R.string.btn_save_log), style = MaterialTheme.typography.labelLarge)
         }
     }
 }

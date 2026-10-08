@@ -106,7 +106,7 @@ fun HomeScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                     shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text("Quay lại theo dõi chu kỳ", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("Back to Cycle Tracking", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             PregnancyScreen(repository = repository, modifier = Modifier.weight(1f))
@@ -129,12 +129,12 @@ fun HomeScreen(
         ) {
             Column {
                 Text(
-                    text = "Xin chào, ${profile?.displayName ?: "Bạn"}",
+                    text = "Hello, ${profile?.displayName ?: "You"}",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
-                    text = "Hôm nay: ${LocalDate.now()}",
+                    text = "Today: ${LocalDate.now()}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -157,7 +157,7 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "Thai kỳ",
+                            text = "Pregnancy",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.secondary,
                             fontWeight = FontWeight.Bold
@@ -242,7 +242,7 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        // Quick Action Button: Ghi nhận kỳ kinh
+        // Quick Action Button
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -285,7 +285,7 @@ fun HomeScreen(
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Ghi nhật ký", style = MaterialTheme.typography.labelLarge)
+                Text("Log Daily", style = MaterialTheme.typography.labelLarge)
             }
         }
 
@@ -307,9 +307,9 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = if (isPeriodDays) "Pha Hành Kinh: Hãy nghỉ ngơi nhẹ nhàng"
-                        else if (isFertileWindow) "Pha Nang Trứng: Năng lượng đạt đỉnh"
-                        else "Pha Hoàng Thể: Lắng nghe cơ thể",
+                        text = if (isPeriodDays) "Menstrual Phase: Rest & Rejuvenate"
+                        else if (isFertileWindow) "Follicular Phase: Energy at Peak"
+                        else "Luteal Phase: Listen to Your Body",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -317,11 +317,11 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = if (isPeriodDays)
-                        "Mức hormone estrogen và progesterone đang ở mức thấp. Hãy bổ sung thực phẩm giàu chất sắt, giữ ấm cơ thể và ngủ đủ giấc."
+                        "Estrogen and progesterone are at baseline levels. Prioritize iron-rich foods, stay warm, and get adequate rest."
                     else if (isFertileWindow)
-                        "Cửa sổ thụ thai đang mở. Nồng độ estrogen tăng cao giúp bạn cảm thấy tự tin, nhiều năng lượng và làn da tươi sáng."
+                        "Fertile window is open. Surging estrogen enhances energy, mood, confidence, and radiant skin."
                     else
-                        "Progesterone tăng cao có thể gây cảm giác thèm ăn hoặc mệt mỏi nhẹ. Hãy ưu tiên đồ ăn tươi, hạn chế caffeine.",
+                        "Elevated progesterone may cause mild fatigue or food cravings. Prioritize fiber-rich meals and stay hydrated.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

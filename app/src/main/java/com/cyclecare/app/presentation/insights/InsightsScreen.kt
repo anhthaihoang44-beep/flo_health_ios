@@ -63,7 +63,7 @@ fun InsightsScreen(
     modifier: Modifier = Modifier
 ) {
     val profile by repository.getProfileFlow().collectAsState(initial = null)
-    val articles by repository.getArticlesFlow("vi").collectAsState(initial = emptyList())
+    val articles by repository.getArticlesFlow("en").collectAsState(initial = emptyList())
 
     var selectedArticle by remember { mutableStateOf<Article?>(null) }
     var showPremiumPaywall by remember { mutableStateOf(false) }
@@ -82,7 +82,7 @@ fun InsightsScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Thống kê sức khỏe & Thư viện kiến thức",
+                text = "Health Statistics & Knowledge Base",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -97,7 +97,7 @@ fun InsightsScreen(
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "Tổng quan chu kỳ của bạn",
+                        text = "Your Cycle Overview",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -108,14 +108,14 @@ fun InsightsScreen(
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         StatItem(
-                            title = "Độ dài chu kỳ",
-                            value = "${profile?.avgCycleLength ?: 28} ngày",
-                            subtitle = "Mức độ đều đặn: Tốt"
+                            title = "Cycle Length",
+                            value = "${profile?.avgCycleLength ?: 28} days",
+                            subtitle = "Regularity: Normal"
                         )
                         StatItem(
-                            title = "Kỳ hành kinh",
-                            value = "${profile?.avgPeriodLength ?: 5} ngày",
-                            subtitle = "Trong ngưỡng chuẩn"
+                            title = "Period Length",
+                            value = "${profile?.avgPeriodLength ?: 5} days",
+                            subtitle = "Standard range"
                         )
                     }
                 }
@@ -144,13 +144,13 @@ fun InsightsScreen(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Biểu đồ chu kỳ 6 tháng",
+                                text = "6-Month Cycle History",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
                         }
                         Text(
-                            text = "Chuẩn: 28 ngày",
+                            text = "Target: 28 days",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -160,7 +160,7 @@ fun InsightsScreen(
 
                     // Simulated 6 recent cycle lengths
                     val recentLengths = listOf(28, 29, 27, 28, 30, 28)
-                    val monthLabels = listOf("T5", "T6", "T7", "T8", "T9", "T10")
+                    val monthLabels = listOf("May", "Jun", "Jul", "Aug", "Sep", "Oct")
                     val barColor = MaterialTheme.colorScheme.primary
                     val gridColor = MaterialTheme.colorScheme.outlineVariant
 
@@ -238,7 +238,7 @@ fun InsightsScreen(
         // Articles Header
         item {
             Text(
-                text = "Thư viện kiến thức sức khỏe",
+                text = "Health Insights & Library",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -377,13 +377,13 @@ fun InsightsScreen(
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Nâng cấp CycleCare Premium",
+                    text = "Upgrade to CycleCare Premium",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "Mở khóa toàn bộ bài viết chuyên sâu & Báo cáo sức khỏe PDF hàng tháng",
+                    text = "Unlock all expert health insights, symptom analysis & monthly PDF reports",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -397,7 +397,7 @@ fun InsightsScreen(
                     shape = RoundedCornerShape(26.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
                 ) {
-                    Text("Trải nghiệm 7 ngày miễn phí", style = MaterialTheme.typography.labelLarge)
+                    Text("Start 7-Day Free Trial", style = MaterialTheme.typography.labelLarge)
                 }
                 Spacer(modifier = Modifier.height(24.dp))
             }

@@ -108,11 +108,11 @@ class SupabaseManager {
                 val userId = user?.optString("id") ?: ""
                 AuthResult.Success(userId = userId, email = email, isAnonymous = false)
             } else {
-                val errResp = conn.errorStream?.bufferedReader()?.use { it.readText() } ?: "Đăng nhập thất bại"
+                val errResp = conn.errorStream?.bufferedReader()?.use { it.readText() } ?: "Sign in failed"
                 AuthResult.Error(errResp)
             }
         } catch (e: Exception) {
-            AuthResult.Error(e.message ?: "Lỗi kết nối máy chủ")
+            AuthResult.Error(e.message ?: "Server connection error")
         }
     }
 

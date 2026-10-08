@@ -51,29 +51,29 @@ class ReminderWorker(
             val today = LocalDate.now()
             val daysUntilPeriod = ChronoUnit.DAYS.between(today, prediction.nextPeriodStartDate)
 
-            // Kiểm tra nhắc nhở kỳ kinh (trước 1 ngày)
+            // Check period reminder (1 day before)
             if (daysUntilPeriod == 1L) {
                 notificationHelper.showNotification(
                     NotificationHelper.NOTIFICATION_ID_PERIOD,
-                    "Nhắc nhở kỳ kinh - CycleCare",
-                    "Kỳ kinh nguyệt tiếp theo của bạn dự kiến sẽ bắt đầu vào ngày mai. Hãy lắng nghe cơ thể và chuẩn bị sẵn sàng nhé!"
+                    "Period Reminder - CycleCare",
+                    "Your next period is predicted to start tomorrow. Listen to your body and be prepared!"
                 )
             }
 
-            // Kiểm tra nhắc nhở rụng trứng
+            // Check ovulation reminder
             if (today.isEqual(prediction.ovulationDate)) {
                 notificationHelper.showNotification(
                     NotificationHelper.NOTIFICATION_ID_OVULATION,
-                    "Ngày rụng trứng hôm nay",
-                    "Hôm nay là ngày rụng trứng dự đoán của chu kỳ. Khả năng thụ thai đang ở mức cao nhất!"
+                    "Ovulation Day Today",
+                    "Today is your predicted ovulation day. Conception chances are at their peak!"
                 )
             }
 
-            // Nhắc nhở ghi nhật ký mỗi ngày
+            // Daily log reminder
             notificationHelper.showNotification(
                 NotificationHelper.NOTIFICATION_ID_LOG,
-                "Dành 1 phút cho bản thân",
-                "Hôm nay bạn cảm thấy thế nào? Hãy ghi lại tâm trạng và các triệu chứng trong CycleCare để theo dõi sức khỏe nhé."
+                "Take a moment for yourself",
+                "How are you feeling today? Take a quick second to log your symptoms and mood in CycleCare."
             )
 
             Result.success()

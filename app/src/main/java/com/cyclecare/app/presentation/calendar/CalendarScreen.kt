@@ -105,17 +105,17 @@ fun CalendarScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { currentYearMonth = currentYearMonth.minusMonths(1) }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Tháng trước")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous Month")
             }
 
             Text(
-                text = "${currentYearMonth.month.getDisplayName(TextStyle.FULL, Locale("vi"))} ${currentYearMonth.year}",
+                text = "${currentYearMonth.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)} ${currentYearMonth.year}",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 
             IconButton(onClick = { currentYearMonth = currentYearMonth.plusMonths(1) }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Tháng sau")
+                Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next Month")
             }
         }
 
@@ -123,7 +123,7 @@ fun CalendarScreen(
 
         // Weekday Headers
         Row(modifier = Modifier.fillMaxWidth()) {
-            val weekdays = listOf("CN", "T2", "T3", "T4", "T5", "T6", "T7")
+            val weekdays = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
             weekdays.forEach { day ->
                 Text(
                     text = day,
@@ -213,7 +213,7 @@ fun CalendarScreen(
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
                 Text(
-                    text = "Chú thích màu sắc (Chạm vào ngày để điều chỉnh kỳ kinh)",
+                    text = "Color Legend (Tap any date to adjust your period)",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -243,7 +243,7 @@ fun CalendarScreen(
                     .padding(24.dp)
             ) {
                 Text(
-                    text = "Ngày ${targetDate.dayOfMonth} tháng ${targetDate.monthValue}, ${targetDate.year}",
+                    text = "${targetDate.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH)} ${targetDate.dayOfMonth}, ${targetDate.year}",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -275,7 +275,7 @@ fun CalendarScreen(
                 ) {
                     Icon(Icons.Default.WaterDrop, contentDescription = null)
                     Spacer(modifier = Modifier.size(8.dp))
-                    Text("Bắt đầu kỳ kinh tại ngày này")
+                    Text("Start Period on this Date")
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -292,7 +292,7 @@ fun CalendarScreen(
                 ) {
                     Icon(Icons.Default.Edit, contentDescription = null)
                     Spacer(modifier = Modifier.size(8.dp))
-                    Text("Ghi nhật ký cho ngày này")
+                    Text("Log Symptoms for this Day")
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))

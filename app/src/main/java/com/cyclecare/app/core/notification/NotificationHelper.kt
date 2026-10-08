@@ -15,7 +15,7 @@ class NotificationHelper(private val context: Context) {
 
     companion object {
         const val CHANNEL_ID = "cyclecare_notifications"
-        const val CHANNEL_NAME = "CycleCare Nhắc Nhở"
+        const val CHANNEL_NAME = "CycleCare Reminders"
         const val NOTIFICATION_ID_PERIOD = 1001
         const val NOTIFICATION_ID_OVULATION = 1002
         const val NOTIFICATION_ID_LOG = 1003
@@ -30,7 +30,7 @@ class NotificationHelper(private val context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
-                description = "Kênh thông báo theo dõi chu kỳ và nhắc nhở sức khỏe của CycleCare"
+                description = "Cycle tracking and health reminders notification channel for CycleCare"
                 enableVibration(true)
             }
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

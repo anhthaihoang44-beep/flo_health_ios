@@ -114,7 +114,7 @@ fun SettingsScreen(
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     Text(
-                        text = if (profile?.isAnonymous == true) "Chế độ Ẩn danh" else "Tài khoản chính thức",
+                        text = if (profile?.isAnonymous == true) "Anonymous Mode" else "Registered Account",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -160,7 +160,7 @@ fun SettingsScreen(
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     Text(
-                        text = "Cài đặt nhắc nhở",
+                        text = "Reminder Settings",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -169,17 +169,17 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 ReminderSwitchItem(
-                    title = "Nhắc trước kỳ kinh (1 ngày)",
+                    title = "Period reminder (1 day before)",
                     checked = periodReminderEnabled,
                     onCheckedChange = { periodReminderEnabled = it }
                 )
                 ReminderSwitchItem(
-                    title = "Nhắc ngày rụng trứng",
+                    title = "Ovulation day reminder",
                     checked = ovulationReminderEnabled,
                     onCheckedChange = { ovulationReminderEnabled = it }
                 )
                 ReminderSwitchItem(
-                    title = "Nhắc ghi nhật ký mỗi tối (20:00)",
+                    title = "Daily log reminder (8:00 PM)",
                     checked = dailyLogReminderEnabled,
                     onCheckedChange = { dailyLogReminderEnabled = it }
                 )
@@ -219,7 +219,7 @@ fun SettingsScreen(
                     onCheckedChange = { enabled ->
                         coroutineScope.launch {
                             sessionManager.setBiometricEnabled(enabled)
-                            Toast.makeText(context, if (enabled) "Đã bật khóa vân tay/PIN bảo vệ" else "Đã tắt khóa bảo vệ", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, if (enabled) "Biometric / PIN lock enabled" else "App lock disabled", Toast.LENGTH_SHORT).show()
                         }
                     },
                     colors = SwitchDefaults.colors(checkedThumbColor = MaterialTheme.colorScheme.secondary)
@@ -303,10 +303,10 @@ fun SettingsScreen(
     if (showLinkIdentityDialog) {
         AlertDialog(
             onDismissRequest = { showLinkIdentityDialog = false },
-            title = { Text("Nâng Cấp Tài Khoản (Link Identity)") },
+            title = { Text("Link Account (Upgrade Identity)") },
             text = {
                 Column {
-                    Text("Nhập email và mật khẩu để liên kết tài khoản. Toàn bộ lịch sử chu kỳ và nhật ký của bạn sẽ được giữ nguyên vẹn.")
+                    Text("Enter email and password to link your account. All your cycle and log data will be securely preserved.")
                     Spacer(modifier = Modifier.height(14.dp))
                     OutlinedTextField(
                         value = linkEmail,
@@ -318,7 +318,7 @@ fun SettingsScreen(
                     OutlinedTextField(
                         value = linkPassword,
                         onValueChange = { linkPassword = it },
-                        label = { Text("Mật khẩu") },
+                        label = { Text("Password") },
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -332,26 +332,26 @@ fun SettingsScreen(
                 Button(
                     onClick = {
                         if (linkEmail.isBlank() || linkPassword.length < 6) {
-                            linkErrorMessage = "Vui lòng nhập email hợp lệ và mật khẩu ít nhất 6 ký tự."
+                            linkErrorMessage = "Please enter a valid email and password with at least 6 characters."
                             return@Button
                         }
                         coroutineScope.launch {
                             val res = repository.linkIdentity(linkEmail, linkPassword)
                             if (res is AuthResult.Success) {
                                 showLinkIdentityDialog = false
-                                Toast.makeText(context, "Nâng cấp tài khoản thành công!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Account linked successfully!", Toast.LENGTH_SHORT).show()
                             } else if (res is AuthResult.Error) {
                                 linkErrorMessage = res.message
                             }
                         }
                     }
                 ) {
-                    Text("Xác nhận")
+                    Text("Confirm")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showLinkIdentityDialog = false }) {
-                    Text("Hủy")
+                    Text("Cancel")
                 }
             }
         )
@@ -361,10 +361,10 @@ fun SettingsScreen(
     if (showExportDialog) {
         AlertDialog(
             onDismissRequest = { showExportDialog = false },
-            title = { Text("Dữ Liệu Cá Nhân (JSON Export)") },
+            title = { Text("Personal Data (JSON Export)") },
             text = {
                 Column {
-                    Text("Dữ liệu chu kỳ và nhật ký sức khỏe của bạn đã được xuất dưới dạng JSON bảo mật:")
+                    Text("Your cycle and health log data has been exported into secure JSON format:")
                     Spacer(modifier = Modifier.height(10.dp))
                     Box(
                         modifier = Modifier
@@ -388,16 +388,16 @@ fun SettingsScreen(
                         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                         val clip = ClipData.newPlainText("CycleCare_Data_Export", exportedJsonText)
                         clipboard.setPrimaryClip(clip)
-                        Toast.makeText(context, "Đã sao chép JSON vào bộ nhớ tạm!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Copied JSON to clipboard!", Toast.LENGTH_SHORT).show()
                         showExportDialog = false
                     }
                 ) {
-                    Text("Sao chép vào Clipboard")
+                    Text("Copy to Clipboard")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showExportDialog = false }) {
-                    Text("Đóng")
+                    Text("Close")
                 }
             }
         )
@@ -407,24 +407,24 @@ fun SettingsScreen(
     if (showDeleteConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirmDialog = false },
-            title = { Text("Xác nhận xóa dữ liệu") },
-            text = { Text("Tất cả chu kỳ và nhật ký sức khỏe của bạn sẽ bị xóa vĩnh viễn trên thiết bị này và không thể phục hồi.") },
+            title = { Text("Confirm Data Deletion") },
+            text = { Text("All your cycle and health log data will be permanently deleted from this device and cannot be recovered.") },
             confirmButton = {
                 TextButton(
                     onClick = {
                         coroutineScope.launch {
                             profile?.let { repository.clearAllData(it.id) }
                             showDeleteConfirmDialog = false
-                            Toast.makeText(context, "Toàn bộ dữ liệu đã được xóa sạch.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "All data has been wiped.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 ) {
-                    Text("Xóa vĩnh viễn", color = MaterialTheme.colorScheme.error)
+                    Text("Delete Permanently", color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirmDialog = false }) {
-                    Text("Hủy")
+                    Text("Cancel")
                 }
             }
         )
