@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_rose">#FF6584</color>
+    <color name="secondary_lavender">#8B5CF6</color>
+    <color name="accent_peach">#FF9E7D</color>
+    <color name="background_light">#FFF9FB</color>
+    <color name="surface_light">#FFFFFF</color>
+</resources>

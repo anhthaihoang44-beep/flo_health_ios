@@ -1,0 +1,23 @@
+*.iml
+.gradle
+.kotlin/
+/local.properties
+/.idea
+.DS_Store
+/build
+app/build
+*/build
+captures/
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Secrets
+Secrets.xcconfig
+*.jks
+*.keystore

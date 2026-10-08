@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CycleCare</string>
+    <string name="tagline">Đồng hành cùng sức khỏe và chu kỳ của bạn</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Chào mừng bạn đến với CycleCare</string>
+    <string name="onboarding_welcome_desc">Không gian an toàn, riêng tư theo dõi chu kỳ kinh nguyệt, rụng trứng và sức khỏe sinh sản.</string>
+    <string name="onboarding_goal_title">Mục tiêu chính của bạn là gì?</string>
+    <string name="onboarding_goal_subtitle">Bạn có thể thay đổi mục tiêu này bất kỳ lúc nào trong cài đặt.</string>
+    <string name="goal_track">Theo dõi chu kỳ kinh nguyệt</string>
+    <string name="goal_conceive">Kế hoạch thụ thai</string>
+    <string name="goal_pregnant">Đang mang thai</string>
+    <string name="goal_perimenopause">Giai đoạn tiền mãn kinh</string>
+
+    <string name="onboarding_period_date_title">Kỳ kinh gần nhất bắt đầu khi nào?</string>
+    <string name="onboarding_cycle_length_title">Chu kỳ của bạn thường kéo dài bao lâu?</string>
+    <string name="onboarding_period_length_title">Mỗi kỳ kinh thường kéo dài bao nhiêu ngày?</string>
+    <string name="days_unit">%d ngày</string>
+    <string name="btn_continue">Tiếp tục</string>
+    <string name="btn_back">Quay lại</string>
+    <string name="btn_start_anonymous">Dùng ngay không cần đăng ký (Ẩn danh)</string>
+    <string name="btn_signin">Đăng nhập</string>
+    <string name="btn_signup">Đăng ký tài khoản</string>
+
+    <!-- Home -->
+    <string name="nav_home">Tổng quan</string>
+    <string name="nav_calendar">Lịch</string>
+    <string name="nav_log">Nhật ký</string>
+    <string name="nav_insights">Thống kê</string>
+    <string name="nav_settings">Cài đặt</string>
+    
+    <string name="cycle_day_indicator">Ngày thứ %d</string>
+    <string name="cycle_day_of_cycle">của chu kỳ</string>
+    <string name="days_until_period">Còn %d ngày đến kỳ kinh</string>
+    <string name="period_starts_today">Kỳ kinh bắt đầu hôm nay</string>
+    <string name="period_late_days">Kỳ kinh chậm %d ngày</string>
+    <string name="fertile_chance_low">Khả năng thụ thai: Thấp</string>
+    <string name="fertile_chance_high">Khả năng thụ thai: Cao</string>
+    <string name="fertile_chance_ovulation">Ngày rụng trứng</string>
+    <string name="btn_log_period">Ghi nhận kỳ kinh</string>
+    <string name="btn_end_period">Kết thúc kỳ kinh</string>
+
+    <!-- Calendar -->
+    <string name="calendar_legend_period">Hành kinh</string>
+    <string name="calendar_legend_predicted">Dự đoán</string>
+    <string name="calendar_legend_fertile">Cửa sổ thụ thai</string>
+    <string name="calendar_legend_ovulation">Rụng trứng</string>
+    <string name="calendar_edit_period_dialog_title">Điều chỉnh kỳ kinh</string>
+
+    <!-- Daily Log -->
+    <string name="daily_log_title">Nhật ký hằng ngày</string>
+    <string name="section_mood">Tâm trạng</string>
+    <string name="section_discharge">Dịch âm đạo</string>
+    <string name="section_cramps">Mức độ đau bụng (0–5)</string>
+    <string name="section_libido">Ham muốn (0–5)</string>
+    <string name="section_sleep">Giấc ngủ</string>
+    <string name="section_activity">Hoạt động thể chất</string>
+    <string name="section_symptoms">Triệu chứng thể chất</string>
+    <string name="section_note">Ghi chú riêng tư</string>
+    <string name="btn_save_log">Lưu nhật ký</string>
+
+    <!-- Settings & Privacy -->
+    <string name="settings_title">Cài đặt &amp; Quyền riêng tư</string>
+    <string name="settings_anonymous_notice">Bạn đang dùng chế độ Ẩn danh. Hãy nâng cấp tài khoản để sao lưu dữ liệu lên đám mây.</string>
+    <string name="settings_link_account">Nâng cấp tài khoản (Link Identity)</string>
+    <string name="settings_biometric_lock">Bảo vệ bằng Vân tay / Mã PIN</string>
+    <string name="settings_export_data">Xuất dữ liệu cá nhân (JSON)</string>
+    <string name="settings_delete_all_data">Xóa toàn bộ dữ liệu</string>
+    <string name="settings_delete_account">Xóa tài khoản vĩnh viễn</string>
+    <string name="settings_medical_disclaimer">Lưu ý y tế quan trọng</string>
+    <string name="medical_disclaimer_text">Ứng dụng CycleCare chỉ nhằm mục đích theo dõi thông tin cá nhân và dự đoán ước tính. Ứng dụng KHÔNG thay thế cho chẩn đoán y tế, tư vấn chuyên khoa hoặc làm biện pháp tránh thai an toàn. Khi có dấu hiệu sức khỏe bất thường, hãy tham khảo ý kiến bác sĩ chuyên khoa.</string>
+
+    <!-- General -->
+    <string name="loading">Đang tải…</string>
+    <string name="error_generic">Đã có lỗi xảy ra. Vui lòng thử lại.</string>
+    <string name="saved_successfully">Đã lưu thành công!</string>
+</resources>
