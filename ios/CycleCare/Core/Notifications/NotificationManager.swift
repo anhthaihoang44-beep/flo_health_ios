@@ -5,10 +5,16 @@ class NotificationManager {
     static let shared = NotificationManager()
     private init() {}
 
-    func requestAuthorization() {
+    func requestAuthorization(completion: ((Bool) -> Void)? = nil) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
-            // Granted
+            DispatchQueue.main.async {
+                completion?(granted)
+            }
         }
+    }
+
+    func requestPermission(completion: ((Bool) -> Void)? = nil) {
+        requestAuthorization(completion: completion)
     }
 
     func schedulePeriodReminder(daysUntil: Int) {
@@ -37,7 +43,18 @@ class NotificationManager {
         UNUserNotificationCenter.current().add(request)
     }
 
+    func scheduleDailyLogReminder(at date: Date) {
+        let cal = Calendar.current
+        let hour = cal.component(.hour, from: date)
+        let minute = cal.component(.minute, from: date)
+        scheduleDailyLogReminder(hour: hour, minute: minute)
+    }
+
     func clearAllReminders() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    }
+
+    func cancelAllReminders() {
+        clearAllReminders()
     }
 }
